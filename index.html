@@ -226,27 +226,40 @@
   footer img{width:64px;height:64px;object-fit:contain;margin-bottom:1rem;filter:drop-shadow(0 0 14px rgba(242,207,107,.5));animation:gentleBob 4s ease-in-out infinite}
   footer .mark{font-family:'Cinzel Decorative',serif;font-weight:700;letter-spacing:.04em;font-size:1.15rem}
   footer .fine{font-family:'Outfit',sans-serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-top:.8rem;color:var(--mist-dim)}
+  footer .madeby{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--gold-bright);margin-top:1.4rem;text-shadow:0 0 16px rgba(242,207,107,.4);position:relative;display:inline-block}
+  footer .madeby::before,footer .madeby::after{content:"\2726";color:var(--gold);font-size:.7rem;margin:0 .6rem;opacity:.8;vertical-align:middle}
 
   /* ===== FLYING BUTTERFLIES ===== */
-  .butterflies{position:fixed;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+  .butterflies{position:fixed;inset:0;z-index:3;pointer-events:none;overflow:hidden;perspective:600px}
   .bfly{position:absolute;will-change:transform;top:0;left:0}
-  .bfly img{display:block;width:100%;height:auto;filter:drop-shadow(0 0 14px rgba(255,220,140,.7)) drop-shadow(0 0 26px rgba(120,230,200,.4));transform-origin:center;animation:flutter .34s ease-in-out infinite alternate}
-  @keyframes flutter{from{transform:scaleX(1) rotate(-6deg)}to{transform:scaleX(.74) rotate(6deg)}}
-  .bfly.b1{width:66px;animation:fly1 30s linear infinite}
-  .bfly.b2{width:46px;animation:fly2 38s linear infinite;animation-delay:-6s}
-  .bfly.b3{width:82px;animation:fly3 44s linear infinite;animation-delay:-16s}
-  .bfly.b4{width:38px;animation:fly4 34s linear infinite;animation-delay:-22s}
-  .bfly.b5{width:58px;animation:fly5 50s linear infinite;animation-delay:-30s}
-  .bfly.b6{width:50px;animation:fly2 42s linear infinite;animation-delay:-12s}
-  .bfly.b7{width:34px;animation:fly3 36s linear infinite;animation-delay:-28s}
-  .bfly.b8{width:72px;animation:fly5 56s linear infinite;animation-delay:-40s}
-  @keyframes fly1{0%{transform:translate(-12vw,78vh) rotate(8deg)}25%{transform:translate(22vw,46vh) rotate(-6deg)}50%{transform:translate(52vw,64vh) rotate(6deg)}75%{transform:translate(82vw,30vh) rotate(-4deg)}100%{transform:translate(112vw,50vh) rotate(8deg)}}
-  @keyframes fly2{0%{transform:translate(110vw,20vh) scaleX(-1) rotate(6deg)}30%{transform:translate(64vw,52vh) scaleX(-1) rotate(-6deg)}60%{transform:translate(30vw,30vh) scaleX(-1) rotate(6deg)}100%{transform:translate(-14vw,58vh) scaleX(-1) rotate(-4deg)}}
-  @keyframes fly3{0%{transform:translate(-14vw,30vh) rotate(-6deg)}28%{transform:translate(26vw,58vh) rotate(6deg)}55%{transform:translate(58vw,26vh) rotate(-6deg)}80%{transform:translate(84vw,54vh) rotate(4deg)}100%{transform:translate(114vw,32vh) rotate(-6deg)}}
-  @keyframes fly4{0%{transform:translate(108vw,70vh) scaleX(-1) rotate(-6deg)}35%{transform:translate(60vw,34vh) scaleX(-1) rotate(6deg)}70%{transform:translate(24vw,60vh) scaleX(-1) rotate(-6deg)}100%{transform:translate(-12vw,38vh) scaleX(-1) rotate(4deg)}}
-  @keyframes fly5{0%{transform:translate(-12vw,52vh) rotate(6deg)}30%{transform:translate(30vw,24vh) rotate(-6deg)}60%{transform:translate(62vw,56vh) rotate(6deg)}100%{transform:translate(114vw,40vh) rotate(-6deg)}}
+  .bfly .wing{display:block;transform-style:preserve-3d;animation:flap .26s ease-in-out infinite alternate}
+  .bfly img{display:block;width:100%;height:auto;filter:drop-shadow(0 0 12px rgba(255,220,140,.7)) drop-shadow(0 0 24px rgba(120,230,200,.4))}
+  /* wing-flap: fold toward centre using 3D rotateY + slight vertical bob */
+  @keyframes flap{
+    0%{transform:rotateY(58deg) rotateZ(-4deg) translateY(0)}
+    100%{transform:rotateY(-58deg) rotateZ(4deg) translateY(-2px)}
+  }
+  .bfly.b1{width:60px;animation:fly1 34s linear infinite}
+  .bfly.b2{width:42px;animation:fly2 40s linear infinite;animation-delay:-7s}
+  .bfly.b3{width:74px;animation:fly3 48s linear infinite;animation-delay:-19s}
+  .bfly.b4{width:34px;animation:fly4 30s linear infinite;animation-delay:-11s}
+  .bfly.b5{width:52px;animation:fly5 52s linear infinite;animation-delay:-33s}
+  .bfly.b6{width:46px;animation:fly6 44s linear infinite;animation-delay:-5s}
+  .bfly.b7{width:30px;animation:fly7 38s linear infinite;animation-delay:-26s}
+  .bfly.b8{width:66px;animation:fly8 58s linear infinite;animation-delay:-44s}
+  .bfly.b2 .wing{animation-duration:.22s}.bfly.b4 .wing{animation-duration:.19s}.bfly.b7 .wing{animation-duration:.17s}
+  .bfly.b3 .wing{animation-duration:.31s}.bfly.b8 .wing{animation-duration:.34s}
+  /* scattered flight paths across the WHOLE screen — top, bottom, corners, edges */
+  @keyframes fly1{0%{transform:translate(-12vw,12vh)}25%{transform:translate(20vw,4vh)}50%{transform:translate(46vw,16vh)}75%{transform:translate(78vw,6vh)}100%{transform:translate(112vw,14vh)}}
+  @keyframes fly2{0%{transform:translate(108vw,86vh)}30%{transform:translate(70vw,72vh)}60%{transform:translate(34vw,90vh)}100%{transform:translate(-12vw,76vh)}}
+  @keyframes fly3{0%{transform:translate(6vw,-10vh)}30%{transform:translate(14vw,40vh)}60%{transform:translate(4vw,78vh)}100%{transform:translate(12vw,112vh)}}
+  @keyframes fly4{0%{transform:translate(112vw,8vh)}35%{transform:translate(88vw,42vh)}70%{transform:translate(94vw,76vh)}100%{transform:translate(108vw,110vh)}}
+  @keyframes fly5{0%{transform:translate(-12vw,50vh)}30%{transform:translate(28vw,38vh)}60%{transform:translate(60vw,58vh)}100%{transform:translate(112vw,44vh)}}
+  @keyframes fly6{0%{transform:translate(82vw,-10vh)}30%{transform:translate(70vw,30vh)}60%{transform:translate(86vw,58vh)}100%{transform:translate(74vw,112vh)}}
+  @keyframes fly7{0%{transform:translate(-10vw,90vh)}28%{transform:translate(26vw,80vh)}55%{transform:translate(54vw,94vh)}80%{transform:translate(82vw,82vh)}100%{transform:translate(112vw,92vh)}}
+  @keyframes fly8{0%{transform:translate(40vw,112vh)}30%{transform:translate(20vw,70vh)}55%{transform:translate(50vw,40vh)}80%{transform:translate(30vw,16vh)}100%{transform:translate(46vw,-12vh)}}
   @media (prefers-reduced-motion:reduce){.butterflies{display:none}}
-  @media(max-width:680px){.bfly.b3,.bfly.b8{display:none}.bfly.b1{width:52px}.bfly.b5{width:46px}}
+  @media(max-width:680px){.bfly.b3,.bfly.b8{display:none}.bfly.b1{width:46px}.bfly.b5{width:40px}}
 
   /* ===== ATTIRE SECTION ===== */
   .palette{display:flex;flex-wrap:wrap;gap:1.1rem;justify-content:center;max-width:780px;margin:0 auto 2.8rem}
@@ -366,14 +379,14 @@
 <canvas id="sparkles" aria-hidden="true"></canvas>
 <canvas id="fireflies" aria-hidden="true"></canvas>
 <div class="butterflies" aria-hidden="true">
-  <div class="bfly b1"><img src="assets/butterfly.png" alt=""></div>
-  <div class="bfly b2"><img src="assets/butterfly.png" alt=""></div>
-  <div class="bfly b3"><img src="assets/butterfly.png" alt=""></div>
-  <div class="bfly b4"><img src="assets/butterfly.png" alt=""></div>
-  <div class="bfly b5"><img src="assets/butterfly.png" alt=""></div>
-  <div class="bfly b6"><img src="assets/butterfly.png" alt=""></div>
-  <div class="bfly b7"><img src="assets/butterfly.png" alt=""></div>
-  <div class="bfly b8"><img src="assets/butterfly.png" alt=""></div>
+  <div class="bfly b1"><span class="wing"><img src="assets/butterfly.png" alt=""></span></div>
+  <div class="bfly b2"><span class="wing"><img src="assets/butterfly.png" alt=""></span></div>
+  <div class="bfly b3"><span class="wing"><img src="assets/butterfly.png" alt=""></span></div>
+  <div class="bfly b4"><span class="wing"><img src="assets/butterfly.png" alt=""></span></div>
+  <div class="bfly b5"><span class="wing"><img src="assets/butterfly.png" alt=""></span></div>
+  <div class="bfly b6"><span class="wing"><img src="assets/butterfly.png" alt=""></span></div>
+  <div class="bfly b7"><span class="wing"><img src="assets/butterfly.png" alt=""></span></div>
+  <div class="bfly b8"><span class="wing"><img src="assets/butterfly.png" alt=""></span></div>
 </div>
 
 <!-- music -->
@@ -397,7 +410,7 @@
       <img class="logo" src="assets/gis-logo.png" alt="Golden International School">
       <p class="eyebrow">Golden International School presents</p>
       <h1 class="shimmer-text">Guardians<br>of Our World</h1>
-      <p class="subt">Graduation &amp; End-of-Year Presentation</p>
+      <p class="subt">Graduation Ceremony &amp; End-of-Year Presentation</p>
       <div class="flourish" aria-hidden="true"><span class="icon" data-ic="sparkles"></span></div>
       <p class="tagline">Every child is a guardian of something — and as they grow, what they protect grows with them.</p>
       <div class="meta">
@@ -549,7 +562,8 @@
   <footer>
     <img src="assets/gis-logo.png" alt="GIS">
     <p class="mark shimmer-text">Guardians of Our World</p>
-    <p class="fine">Golden International School · Vientiane · 2026 · Internal Teacher Reference</p>
+    <p class="fine">Golden International School · Graduation Ceremony &amp; End-of-Year Presentation</p>
+    <p class="madeby">Made by Teacher Rommel</p>
   </footer>
 </div>
 <script>
@@ -825,27 +839,52 @@ const ICONS={"trees": "<path d=\"M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10
     size();draw();
   })();
 
-  // ===== CURSOR SPARKLE TRAIL (big, glowing stars) =====
+  // ===== SPARKLE TRAIL (desktop cursor + mobile scroll/touch) =====
   (function(){
     if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-    if(matchMedia('(pointer:coarse)').matches)return;
-    let last=0;const cols=['#ffe9a8','#c4a9ff','#5fe6cf','#ff9ec4','#ffd17a'];
-    const starSVG=(c)=>`<svg viewBox="0 0 24 24" style="width:100%;height:100%"><path d="M12 0 C13 8 16 11 24 12 C16 13 13 16 12 24 C11 16 8 13 0 12 C8 11 11 8 12 0Z" fill="${c}"/></svg>`;
-    addEventListener('mousemove',e=>{
-      const now=Date.now();if(now-last<26)return;last=now;
-      const big=Math.random()<.32;
-      const sz=big?(Math.random()*16+16):(Math.random()*10+8);
+    const cols=['#ffe9a8','#c4a9ff','#5fe6cf','#ff9ec4','#ffd17a','#aef0c4'];
+    const starPath="M12 0 C13 8 16 11 24 12 C16 13 13 16 12 24 C11 16 8 13 0 12 C8 11 11 8 12 0Z";
+    const layer=document.createElement('div');
+    layer.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:9998';
+    document.body.appendChild(layer);
+    function spark(px,py,scale){
+      const big=Math.random()<.34;
+      const sz=(big?(Math.random()*16+16):(Math.random()*10+8))*(scale||1);
       const c=cols[Math.floor(Math.random()*cols.length)];
+      const jx=(Math.random()-.5)*24, jy=(Math.random()-.5)*24;
       const d=document.createElement('div');
-      const jx=(Math.random()-.5)*22, jy=(Math.random()-.5)*22;
-      const rot=(Math.random()*120-60);
-      d.style.cssText=`position:fixed;left:${e.clientX+jx}px;top:${e.clientY+jy}px;width:${sz}px;height:${sz}px;margin:${-sz/2}px 0 0 ${-sz/2}px;pointer-events:none;z-index:9999;filter:drop-shadow(0 0 ${big?10:6}px ${c});transition:transform .9s cubic-bezier(.2,.7,.3,1),opacity .9s ease;opacity:1;transform:rotate(0deg) scale(1)`;
-      d.innerHTML=starSVG(c);
-      document.body.appendChild(d);
-      requestAnimationFrame(()=>{d.style.transform=`translate(${(Math.random()-.5)*30}px,${Math.random()*36+14}px) rotate(${rot}deg) scale(0)`;d.style.opacity='0';});
-      setTimeout(()=>d.remove(),950);
-    });
+      d.style.cssText=`position:absolute;left:${px+jx}px;top:${py+jy}px;width:${sz}px;height:${sz}px;margin:${-sz/2}px 0 0 ${-sz/2}px;pointer-events:none;filter:drop-shadow(0 0 ${big?12:7}px ${c})`;
+      d.innerHTML=`<svg viewBox="0 0 24 24" style="width:100%;height:100%;display:block"><path d="${starPath}" fill="${c}"/></svg>`;
+      layer.appendChild(d);
+      const dx=(Math.random()-.5)*34, dy=Math.random()*40+16, rot=(Math.random()*160-80);
+      const anim=d.animate([
+        {transform:'translate(0,0) rotate(0deg) scale(1)',opacity:1},
+        {transform:`translate(${dx}px,${dy}px) rotate(${rot}deg) scale(0)`,opacity:0}
+      ],{duration:950+Math.random()*250,easing:'cubic-bezier(.2,.7,.3,1)',fill:'forwards'});
+      anim.onfinish=()=>d.remove();
+    }
+    // desktop: follow the mouse
+    let last=0;
+    addEventListener('mousemove',e=>{const now=Date.now();if(now-last<24)return;last=now;spark(e.clientX,e.clientY,1);},{passive:true});
+    // mobile/touch: sparkle where finger drags
+    addEventListener('touchmove',e=>{const now=Date.now();if(now-last<40)return;last=now;const t=e.touches[0];if(t)spark(t.clientX,t.clientY,1.05);},{passive:true});
+    // mobile: a wandering sparkle "fairy" that trails while the page is scrolled
+    let lastScroll=window.scrollY, fairyX=innerWidth*0.5, scrollIdle=0, ticking=false;
+    function emitScrollFairy(){
+      // drift the fairy horizontally in a gentle sine as the user scrolls
+      const t=Date.now()/600;
+      fairyX=innerWidth*(0.5+0.34*Math.sin(t));
+      const fairyY=innerHeight*(0.32+0.12*Math.sin(t*1.7));
+      spark(fairyX,fairyY,1.1);
+    }
+    addEventListener('scroll',()=>{
+      if(!matchMedia('(pointer:coarse)').matches)return; // only the touch fairy on phones
+      const now=Date.now();
+      if(now-last<70)return; last=now;
+      emitScrollFairy();
+    },{passive:true});
   })();
+
 
 
   // ===== REVEAL =====
