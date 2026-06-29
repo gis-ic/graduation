@@ -3,52 +3,102 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guardians of Our World — GIS Teacher Reference</title>
+<title>Guardians of Our World — Golden International School</title>
 <link rel="icon" href="assets/gis-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#08061c;--ink-2:#120a2e;--royal:#3a1d63;--celest:#16245f;--summit:#2a1c54;
-    --gold:#f2c94c;--gold-bright:#ffe9a8;--gold-deep:#c8922f;--teal:#5fe6cf;--violet:#c4a9ff;--rose:#ff9ec4;--vine:#3f7d54;--vine-light:#6cc28a;
-    --parchment:#f8f1de;--mist:rgba(248,241,222,.8);--mist-dim:rgba(248,241,222,.55);
-    --hair:rgba(242,201,76,.32);
+    --ink:#06140f;--ink-2:#0a1f17;--forest-deep:#0c2a1d;--forest:#123b29;--forest-mid:#1a5238;
+    --moss:#3f8a5c;--moss-light:#6cc28a;--leaf-glow:#9be8a8;
+    --gold:#f2cf6b;--gold-bright:#ffe9a8;--gold-deep:#c8922f;--amber:#ffb24d;
+    --teal:#5fe6cf;--violet:#c4a9ff;--rose:#ff9ec4;
+    --parchment:#f4efe0;--mist:rgba(244,239,224,.82);--mist-dim:rgba(244,239,224,.55);
+    --hair:rgba(242,207,107,.3);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{background:var(--ink);color:var(--parchment);font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.6;overflow-x:hidden}
+  body{background:var(--ink);color:var(--parchment);font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.62;overflow-x:hidden}
 
-  /* ===== ATMOSPHERE ===== */
-  .atmosphere{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-  .aurora{position:absolute;inset:-25% -15%;filter:blur(75px);opacity:.6;mix-blend-mode:screen}
-  .aurora.a1{background:radial-gradient(40% 30% at 28% 18%, rgba(196,169,255,.6), transparent 70%);animation:drift1 20s ease-in-out infinite alternate}
-  .aurora.a2{background:radial-gradient(45% 32% at 72% 35%, rgba(95,230,207,.5), transparent 70%);animation:drift2 26s ease-in-out infinite alternate}
-  .aurora.a3{background:radial-gradient(42% 30% at 50% 72%, rgba(255,158,196,.42), transparent 70%);animation:drift3 23s ease-in-out infinite alternate}
-  .aurora.a4{background:radial-gradient(38% 28% at 80% 80%, rgba(242,201,76,.4), transparent 70%);animation:drift1 30s ease-in-out infinite alternate}
+  /* ===== AMBIENT FOREST BACKDROP ===== */
+  .bg-layer{position:fixed;inset:0;z-index:0;pointer-events:none}
+  .bg-forest{position:absolute;inset:0;background-image:url('assets/forest-ambient.jpg');background-size:cover;background-position:center top;opacity:.5;mix-blend-mode:luminosity}
+  .bg-tint{position:absolute;inset:0;background:
+     radial-gradient(120% 80% at 50% 0%, rgba(95,230,207,.10), transparent 55%),
+     radial-gradient(100% 70% at 50% 100%, rgba(242,207,107,.10), transparent 60%),
+     linear-gradient(180deg, rgba(6,20,15,.6), rgba(6,20,15,.86) 45%, rgba(6,20,15,.96))}
+  .aurora{position:absolute;inset:-25% -15%;filter:blur(80px);opacity:.5;mix-blend-mode:screen}
+  .aurora.a1{background:radial-gradient(40% 30% at 28% 18%, rgba(108,194,138,.55), transparent 70%);animation:drift1 24s ease-in-out infinite alternate}
+  .aurora.a2{background:radial-gradient(45% 32% at 72% 35%, rgba(95,230,207,.45), transparent 70%);animation:drift2 30s ease-in-out infinite alternate}
+  .aurora.a3{background:radial-gradient(42% 30% at 50% 75%, rgba(242,207,107,.4), transparent 70%);animation:drift3 26s ease-in-out infinite alternate}
   @keyframes drift1{from{transform:translate(-5%,-4%) scale(1)}to{transform:translate(7%,5%) scale(1.18)}}
   @keyframes drift2{from{transform:translate(6%,3%) scale(1.12)}to{transform:translate(-7%,-5%) scale(1)}}
   @keyframes drift3{from{transform:translate(-4%,5%) scale(1)}to{transform:translate(5%,-6%) scale(1.22)}}
-  #stars,#sparkles,#fireflies{position:absolute;inset:0;width:100%;height:100%}
+  #stars,#sparkles,#fireflies{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
   @media (prefers-reduced-motion:reduce){.aurora{animation:none}}
 
   .wrap{position:relative;z-index:1}
   .eyebrow{font-family:'Outfit',sans-serif;font-weight:400;letter-spacing:.42em;text-transform:uppercase;font-size:.72rem;color:var(--gold)}
   .label{font-family:'Outfit',sans-serif;font-weight:500;letter-spacing:.2em;text-transform:uppercase;font-size:.7rem}
-  .shimmer-text{background:linear-gradient(100deg,var(--gold-deep) 0%,var(--gold) 25%,var(--gold-bright) 45%,#fff7e0 50%,var(--gold-bright) 55%,var(--gold) 75%,var(--gold-deep) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmerflow 6s linear infinite;filter:drop-shadow(0 2px 30px rgba(242,201,76,.35))}
+  .icon{display:inline-block;vertical-align:middle}
+  .icon svg, .scene-icon svg, .ph-icon svg, .car-btn svg{display:block;width:100%;height:100%;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+  .shimmer-text{background:linear-gradient(100deg,var(--gold-deep) 0%,var(--gold) 25%,var(--gold-bright) 45%,#fff7e0 50%,var(--gold-bright) 55%,var(--gold) 75%,var(--gold-deep) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmerflow 6s linear infinite;filter:drop-shadow(0 2px 30px rgba(242,207,107,.4))}
   @keyframes shimmerflow{0%{background-position:200% 0}100%{background-position:-200% 0}}
   @media (prefers-reduced-motion:reduce){.shimmer-text{animation:none}}
 
-  .flourish{display:flex;align-items:center;justify-content:center;gap:1rem;margin:1.3rem auto;color:var(--gold)}
+  .flourish{display:flex;align-items:center;justify-content:center;gap:.9rem;margin:1.3rem auto;color:var(--gold)}
   .flourish::before,.flourish::after{content:"";height:1px;width:min(120px,18vw);background:linear-gradient(90deg,transparent,var(--gold))}
   .flourish::after{background:linear-gradient(90deg,var(--gold),transparent)}
-  .flourish svg{width:24px;height:24px;filter:drop-shadow(0 0 8px rgba(242,201,76,.7));animation:twinkleStar 3s ease-in-out infinite}
-  @keyframes twinkleStar{0%,100%{transform:scale(1) rotate(0);opacity:.8}50%{transform:scale(1.2) rotate(20deg);opacity:1}}
+  .flourish .icon{width:22px;height:22px;color:var(--gold);filter:drop-shadow(0 0 8px rgba(242,207,107,.7));animation:twinkleStar 3s ease-in-out infinite}
+  @keyframes twinkleStar{0%,100%{transform:scale(1) rotate(0);opacity:.8}50%{transform:scale(1.18) rotate(15deg);opacity:1}}
+
+  /* ===== MUSIC BUTTON ===== */
+  .music-fab{position:fixed;right:1.2rem;bottom:1.2rem;z-index:60;display:flex;align-items:center;gap:.6rem;cursor:pointer;
+    background:rgba(10,31,23,.85);border:1px solid var(--hair);border-radius:999px;padding:.6rem .9rem;backdrop-filter:blur(10px);
+    box-shadow:0 6px 30px rgba(0,0,0,.4),0 0 24px rgba(242,207,107,.2);transition:transform .25s,box-shadow .3s;color:var(--gold-bright)}
+  .music-fab:hover{transform:translateY(-2px);box-shadow:0 10px 40px rgba(0,0,0,.5),0 0 34px rgba(242,207,107,.4)}
+  .music-fab .icon{width:22px;height:22px;color:var(--gold-bright)}
+  .music-fab .mtext{font-family:'Outfit',sans-serif;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;max-width:140px;overflow:hidden;transition:max-width .4s,opacity .3s}
+  .music-fab.playing{animation:fabPulse 2.4s ease-in-out infinite}
+  @keyframes fabPulse{0%,100%{box-shadow:0 6px 30px rgba(0,0,0,.4),0 0 18px rgba(95,230,207,.25)}50%{box-shadow:0 6px 30px rgba(0,0,0,.4),0 0 36px rgba(95,230,207,.5)}}
+  .music-fab .eqbars{display:none;align-items:flex-end;gap:2px;height:18px}
+  .music-fab.playing .eqbars{display:flex}
+  .music-fab.playing .micon{display:none}
+  .eqbars i{width:3px;background:var(--gold-bright);border-radius:2px;animation:eq .9s ease-in-out infinite}
+  .eqbars i:nth-child(1){animation-delay:0s;height:8px}.eqbars i:nth-child(2){animation-delay:.2s;height:14px}.eqbars i:nth-child(3){animation-delay:.4s;height:10px}.eqbars i:nth-child(4){animation-delay:.1s;height:16px}
+  @keyframes eq{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+  .music-hint{position:fixed;right:1.2rem;bottom:4.4rem;z-index:60;background:rgba(10,31,23,.92);border:1px solid var(--hair);border-radius:12px;padding:.6rem .85rem;font-family:'Outfit',sans-serif;font-size:.74rem;color:var(--mist);max-width:220px;box-shadow:0 6px 24px rgba(0,0,0,.4);animation:hintFade 6s ease forwards;opacity:0}
+  @keyframes hintFade{0%{opacity:0;transform:translateY(8px)}12%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0;visibility:hidden}}
+  #yt-holder{position:fixed;width:1px;height:1px;left:-100px;top:-100px;opacity:0;pointer-events:none}
+
+  /* ===== HERO ===== */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 1.5rem 4rem;position:relative;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center}
+  .hero-bg .hb-tint{position:absolute;inset:0;background:
+     radial-gradient(90% 60% at 50% 42%, rgba(6,20,15,.15), rgba(6,20,15,.55) 70%, rgba(6,20,15,.92)),
+     linear-gradient(180deg, rgba(6,20,15,.5), transparent 30%, rgba(6,20,15,.85))}
+  .hero-inner{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center}
+  .hero .logo{width:150px;height:150px;object-fit:contain;margin-bottom:1.1rem;filter:drop-shadow(0 0 34px rgba(242,207,107,.55));opacity:0;animation:dropIn 1.1s cubic-bezier(.34,1.56,.64,1) .15s forwards}
+  @keyframes dropIn{0%{opacity:0;transform:translateY(-40px) scale(.7) rotate(-8deg)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
+  .hero .eyebrow{opacity:0;animation:fadeUp 1s ease .5s forwards;color:var(--gold-bright)}
+  .hero h1{font-family:'Cinzel Decorative',serif;font-weight:900;font-size:clamp(2.6rem,8vw,6rem);line-height:1.02;letter-spacing:.01em;margin:.9rem 0 .4rem;opacity:0;animation:fadeUp 1.1s ease .7s forwards}
+  .subt{font-family:'Cinzel',serif;font-weight:500;letter-spacing:.3em;text-transform:uppercase;font-size:clamp(.7rem,1.8vw,1rem);color:var(--mist);margin-top:.5rem;opacity:0;animation:fadeUp 1.1s ease .85s forwards}
+  .tagline{font-style:italic;font-size:clamp(1.1rem,2.5vw,1.55rem);color:var(--gold-bright);max-width:34ch;margin:1.2rem auto 0;text-shadow:0 0 24px rgba(242,207,107,.4),0 2px 10px rgba(0,0,0,.6);opacity:0;animation:fadeUp 1.1s ease 1s forwards}
+  .hero .meta{margin-top:2.4rem;display:flex;gap:2.2rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fadeUp 1.1s ease 1.25s forwards}
+  .hero .meta div{display:flex;flex-direction:column;gap:.3rem;min-width:115px}
+  .hero .meta .label{color:var(--gold)}
+  .hero .meta strong{font-family:'Cinzel',serif;font-weight:500;font-size:1rem;color:var(--parchment);text-shadow:0 2px 8px rgba(0,0,0,.6)}
+  .scrollcue{margin-top:2.6rem;font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mist-dim);opacity:0;animation:fadeUp 1.1s ease 1.5s forwards, floaty 2.6s ease-in-out 2.6s infinite}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
 
   /* ===== NAV ===== */
-  .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.4rem;background:rgba(8,6,28,.72);backdrop-filter:blur(12px);border-bottom:1px solid var(--hair)}
+  .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.4rem;background:rgba(6,20,15,.72);backdrop-filter:blur(12px);border-bottom:1px solid var(--hair)}
   .topbar .brand{display:flex;align-items:center;gap:.7rem}
-  .topbar .brand img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(242,201,76,.5));animation:gentleBob 4s ease-in-out infinite}
+  .topbar .brand img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(242,207,107,.5));animation:gentleBob 4s ease-in-out infinite}
   @keyframes gentleBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
   .topbar .brand b{font-family:'Cinzel',serif;font-weight:600;font-size:.95rem;letter-spacing:.05em;color:var(--gold-bright)}
   .topbar nav{display:flex;gap:1.4rem}
@@ -57,118 +107,98 @@
   .topbar nav a:hover{color:var(--gold-bright)}.topbar nav a:hover::after{width:100%}
   @media(max-width:760px){.topbar nav{display:none}.topbar .brand b{font-size:.8rem}}
 
-  /* ===== HERO ===== */
-  .hero{min-height:97vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 1.5rem 4rem;position:relative;background:radial-gradient(130% 90% at 50% -10%, rgba(196,169,255,.2), transparent 55%),radial-gradient(90% 60% at 50% 110%, rgba(95,230,207,.15), transparent 70%),linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 55%, #0d2e26 100%)}
-  .moon{position:absolute;top:9%;left:50%;transform:translateX(-50%);width:320px;height:320px;border-radius:50%;background:radial-gradient(circle at 50% 45%, rgba(255,233,168,.24), rgba(242,201,76,.08) 45%, transparent 68%);filter:blur(4px);animation:moonpulse 7s ease-in-out infinite}
-  @keyframes moonpulse{0%,100%{opacity:.7;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.08)}}
-  /* vine frame on hero */
-  .vine-frame{position:absolute;z-index:2;pointer-events:none;width:230px;height:230px;opacity:.85;filter:drop-shadow(0 0 8px rgba(108,194,138,.4))}
-  .vine-frame.tl{top:-10px;left:-10px}
-  .vine-frame.tr{top:-10px;right:-10px;transform:scaleX(-1)}
-  .vine-frame.bl{bottom:-10px;left:-10px;transform:scaleY(-1)}
-  .vine-frame.br{bottom:-10px;right:-10px;transform:scale(-1,-1)}
-  .vine-frame path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:vineGrow 3s ease forwards}
-  .vine-frame .leaf{opacity:0;animation:leafPop .6s ease forwards}
-  @keyframes vineGrow{to{stroke-dashoffset:0}}
-  @keyframes leafPop{to{opacity:1;transform:scale(1)}}
-  @media (prefers-reduced-motion:reduce){.vine-frame path{stroke-dashoffset:0}.vine-frame .leaf{opacity:1}}
-  @media(max-width:620px){.vine-frame{width:130px;height:130px}}
-  .hero .logo{width:148px;height:148px;object-fit:contain;margin-bottom:1.2rem;position:relative;z-index:3;filter:drop-shadow(0 0 30px rgba(242,201,76,.5));opacity:0;animation:dropIn 1.1s cubic-bezier(.34,1.56,.64,1) .15s forwards}
-  @keyframes dropIn{0%{opacity:0;transform:translateY(-40px) scale(.7) rotate(-8deg)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
-  .hero .eyebrow{opacity:0;animation:fadeUp 1s ease .5s forwards;position:relative;z-index:3}
-  .hero h1{font-family:'Cinzel Decorative',serif;font-weight:900;font-size:clamp(2.6rem,8vw,6rem);line-height:1.02;letter-spacing:.01em;margin:.9rem 0 .4rem;position:relative;z-index:3;opacity:0;animation:fadeUp 1.1s ease .7s forwards}
-  .subt{font-family:'Cinzel',serif;font-weight:500;letter-spacing:.3em;text-transform:uppercase;font-size:clamp(.7rem,1.8vw,1rem);color:var(--mist);margin-top:.5rem;position:relative;z-index:3;opacity:0;animation:fadeUp 1.1s ease .85s forwards}
-  .tagline{font-style:italic;font-size:clamp(1.1rem,2.5vw,1.55rem);color:var(--gold-bright);max-width:34ch;margin:1.2rem auto 0;position:relative;z-index:3;text-shadow:0 0 24px rgba(242,201,76,.35);opacity:0;animation:fadeUp 1.1s ease 1s forwards}
-  .hero .meta{margin-top:2.4rem;display:flex;gap:2.2rem;flex-wrap:wrap;justify-content:center;position:relative;z-index:3;opacity:0;animation:fadeUp 1.1s ease 1.25s forwards}
-  .hero .meta div{display:flex;flex-direction:column;gap:.3rem;min-width:115px}
-  .hero .meta .label{color:var(--gold)}
-  .hero .meta strong{font-family:'Cinzel',serif;font-weight:500;font-size:1rem;color:var(--parchment)}
-  .scrollcue{margin-top:2.6rem;font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mist-dim);position:relative;z-index:3;opacity:0;animation:fadeUp 1.1s ease 1.5s forwards, floaty 2.6s ease-in-out 2.6s infinite}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
-
   section.block{padding:5.5rem 1.5rem;position:relative}
   .sec-head{text-align:center;max-width:62ch;margin:0 auto 3rem}
   .sec-head h2{font-family:'Cinzel Decorative',serif;font-weight:700;font-size:clamp(1.7rem,4.4vw,2.7rem);letter-spacing:.02em;line-height:1.18;margin:.6rem 0}
   .sec-head p{color:var(--mist);font-size:1.18rem}
 
-  .band-intro{background:linear-gradient(180deg,#0d2e26,#114036)}
-  .band-forest{background:linear-gradient(180deg,#114036,#143f2d)}
-  .band-royal{background:linear-gradient(180deg,#143f2d,var(--royal))}
-  .band-celest{background:linear-gradient(180deg,var(--royal),var(--celest))}
-  .band-music{background:linear-gradient(180deg,var(--celest),var(--summit))}
-  .band-ros{background:linear-gradient(180deg,var(--summit),var(--ink))}
+  .band-a{background:linear-gradient(180deg,rgba(10,31,23,.4),rgba(18,59,41,.5))}
+  .band-b{background:linear-gradient(180deg,rgba(18,59,41,.5),rgba(12,42,29,.55))}
+  .band-c{background:linear-gradient(180deg,rgba(12,42,29,.55),rgba(10,31,23,.6))}
 
   .tier-tag{text-align:center;margin-bottom:2.6rem}
   .tier-tag .eyebrow{display:block;margin-bottom:.7rem}
-  .tier-tag h3{font-family:'Cinzel Decorative',serif;font-weight:700;font-size:clamp(1.4rem,3.6vw,2.2rem);color:var(--parchment);letter-spacing:.03em;text-shadow:0 0 28px rgba(196,169,255,.4)}
+  .tier-tag h3{font-family:'Cinzel Decorative',serif;font-weight:700;font-size:clamp(1.4rem,3.6vw,2.2rem);color:var(--parchment);letter-spacing:.03em;text-shadow:0 0 28px rgba(108,194,138,.4)}
   .tier-tag p{color:var(--mist-dim);font-style:italic;margin-top:.5rem;font-size:1.05rem}
 
   /* ===== REALM CARD ===== */
-  .card{max-width:960px;margin:0 auto 2.8rem;background:rgba(8,6,28,.5);border:1px solid var(--hair);border-radius:22px;overflow:hidden;box-shadow:0 0 40px rgba(0,0,0,.35),0 0 34px var(--card-glow,rgba(242,201,76,.1));backdrop-filter:blur(5px);position:relative;transition:transform .45s cubic-bezier(.34,1.3,.64,1),box-shadow .45s}
-  .card::before{content:"";position:absolute;inset:0;border-radius:22px;padding:1px;pointer-events:none;background:linear-gradient(130deg,transparent 30%,var(--card-ring,rgba(242,201,76,.5)) 50%,transparent 70%);background-size:300% 300%;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s;animation:borderFlow 5s linear infinite;z-index:5}
+  .card{max-width:960px;margin:0 auto 2.8rem;background:rgba(8,24,17,.62);border:1px solid var(--hair);border-radius:22px;overflow:hidden;box-shadow:0 0 40px rgba(0,0,0,.4),0 0 34px var(--card-glow,rgba(242,207,107,.1));backdrop-filter:blur(6px);position:relative;transition:transform .45s cubic-bezier(.34,1.3,.64,1),box-shadow .45s}
+  .card::before{content:"";position:absolute;inset:0;border-radius:22px;padding:1px;pointer-events:none;background:linear-gradient(130deg,transparent 30%,var(--card-ring,rgba(242,207,107,.5)) 50%,transparent 70%);background-size:300% 300%;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s;animation:borderFlow 5s linear infinite;z-index:6}
   @keyframes borderFlow{0%{background-position:200% 0}100%{background-position:-200% 0}}
-  .card:hover{transform:translateY(-8px) scale(1.012);box-shadow:0 14px 60px rgba(0,0,0,.5),0 0 60px var(--card-glow,rgba(242,201,76,.3))}
+  .card:hover{transform:translateY(-8px) scale(1.012);box-shadow:0 14px 60px rgba(0,0,0,.55),0 0 60px var(--card-glow,rgba(242,207,107,.32))}
   .card:hover::before{opacity:1}
-  /* corner vines on each card */
-  .card .cvine{position:absolute;width:120px;height:120px;pointer-events:none;z-index:4;opacity:.55}
+  .card .cvine{position:absolute;width:120px;height:120px;pointer-events:none;z-index:5;opacity:.5}
   .card .cvine.t{top:-2px;left:-2px}
   .card .cvine.b{bottom:-2px;right:-2px;transform:rotate(180deg)}
-  .card .cvine path{stroke:var(--vine-light);fill:none;stroke-width:1.6}
-  .card .cvine .lf{fill:var(--vine-light);stroke:none;opacity:.85}
+  .card .cvine path{stroke:var(--moss-light);fill:none;stroke-width:1.6}
+  .card .cvine .lf{fill:var(--moss-light);stroke:none;opacity:.85}
 
-  /* scene strip — themed visual banner per realm */
-  .scene{height:120px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--scene-bg,linear-gradient(135deg,#1a1438,#241752))}
-  .scene .scene-svg{position:absolute;inset:0;width:100%;height:100%}
-  .scene .scene-emoji{position:relative;z-index:2;font-size:2.4rem;filter:drop-shadow(0 0 12px var(--card-glow,rgba(242,201,76,.6)));animation:iconFloat 4s ease-in-out infinite}
-  @keyframes iconFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(4deg)}}
+  .scene{height:154px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--scene-bg,linear-gradient(135deg,#10331f,#1a5238))}
+  .scene .scene-art{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .scene .scene-vignette{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 120%, rgba(0,0,0,.5), transparent 60%),linear-gradient(180deg,rgba(0,0,0,.18),transparent 35%);pointer-events:none}
+  .scene .scene-icon{position:relative;z-index:3;width:54px;height:54px;color:var(--gold-bright);filter:drop-shadow(0 0 14px var(--card-glow,rgba(242,207,107,.8))) drop-shadow(0 2px 6px rgba(0,0,0,.7));animation:iconFloat 4s ease-in-out infinite}
+  .scene .scene-icon svg{width:100%;height:100%;stroke-width:1.4}
+  @keyframes iconFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(3deg)}}
+  .scene .twk{animation:twk 2.6s ease-in-out infinite}.scene .twk2{animation:twk 3.4s ease-in-out .6s infinite}.scene .twk3{animation:twk 2.2s ease-in-out 1.1s infinite}
+  @keyframes twk{0%,100%{opacity:.25}50%{opacity:1}}
+  .scene .sway{transform-origin:bottom center;animation:sway 5s ease-in-out infinite}.scene .sway2{transform-origin:bottom center;animation:sway 6.5s ease-in-out .8s infinite}
+  @keyframes sway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+  .scene .driftx{animation:driftx 18s linear infinite}@keyframes driftx{0%{transform:translateX(-40px)}100%{transform:translateX(440px)}}
+  .scene .bob{animation:sbob 4.5s ease-in-out infinite}@keyframes sbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  @media (prefers-reduced-motion:reduce){.scene *{animation:none!important}}
 
   .card .grid2{display:grid;grid-template-columns:1.05fr 1fr}
   .card .info{padding:1.8rem 2rem 2rem;position:relative;z-index:3}
   .card .level{font-family:'Outfit',sans-serif;font-weight:600;letter-spacing:.2em;text-transform:uppercase;font-size:.66rem;color:var(--gold)}
   .card h4{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(1.3rem,3vw,1.7rem);color:var(--parchment);margin:.3rem 0 .15rem;line-height:1.12}
-  .card .guardian{font-style:italic;font-size:1.18rem;color:var(--gold-bright);margin-bottom:.5rem;text-shadow:0 0 14px rgba(242,201,76,.25)}
+  .card .guardian{font-style:italic;font-size:1.18rem;color:var(--gold-bright);margin-bottom:.5rem;text-shadow:0 0 14px rgba(242,207,107,.25)}
   .card .story{color:var(--mist);font-size:1.04rem;margin-bottom:.7rem;line-height:1.5}
   .card .chars{color:var(--mist-dim);font-size:.98rem;margin-bottom:.7rem}
   .card .chars b{color:var(--mist);font-weight:600;font-style:normal}
-  .card .sdg{display:inline-flex;align-items:center;gap:.5rem;font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#bdf5ea;border:1px solid rgba(95,230,207,.5);border-radius:999px;padding:.34rem .8rem;background:rgba(95,230,207,.12);box-shadow:0 0 18px rgba(95,230,207,.25);animation:sdgPulse 3s ease-in-out infinite}
-  @keyframes sdgPulse{0%,100%{box-shadow:0 0 14px rgba(95,230,207,.2)}50%{box-shadow:0 0 26px rgba(95,230,207,.45)}}
-  .card .badge-grad{display:inline-block;margin-left:.5rem;font-family:'Outfit',sans-serif;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--ink);background:linear-gradient(180deg,var(--gold-bright),var(--gold));padding:.24rem .58rem;border-radius:999px;vertical-align:middle;box-shadow:0 0 14px rgba(242,201,76,.6)}
+  .card .sdg-pill{display:inline-flex;align-items:center;gap:.5rem;font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#bdf5ea;border:1px solid rgba(95,230,207,.5);border-radius:999px;padding:.34rem .8rem;background:rgba(95,230,207,.12);box-shadow:0 0 18px rgba(95,230,207,.25)}
+  .card .badge-grad{display:inline-flex;align-items:center;gap:.3rem;margin-left:.5rem;font-family:'Outfit',sans-serif;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--ink);background:linear-gradient(180deg,var(--gold-bright),var(--gold));padding:.24rem .58rem;border-radius:999px;vertical-align:middle;box-shadow:0 0 14px rgba(242,207,107,.6)}
+  .card .badge-grad .icon{width:11px;height:11px;color:var(--ink)}
 
-  /* SDG action panel */
+  /* SDG panel */
   .sdg-panel{margin:.9rem 0 0;border-left:2px solid rgba(95,230,207,.5);padding:.6rem 0 .2rem .9rem}
-  .sdg-panel .sdg-head{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
-  .sdg-panel .sdg-num{font-family:'Outfit',sans-serif;font-weight:600;font-size:.78rem;letter-spacing:.06em;color:var(--ink);background:var(--sdg-color,#5fe6cf);padding:.2rem .55rem;border-radius:6px}
-  .sdg-panel .sdg-name{font-family:'Cinzel',serif;font-weight:600;color:var(--parchment);font-size:1.02rem}
+  .sdg-goalchip{display:flex;align-items:center;gap:.7rem;margin-bottom:.7rem}
+  .sdg-goalchip .gnum{font-family:'Outfit',sans-serif;font-weight:600;font-size:1.35rem;line-height:1;color:#fff;background:var(--sdg-color,#5fe6cf);width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px var(--sdg-color,#5fe6cf);flex-shrink:0}
+  .sdg-goalchip .gmeta{display:flex;flex-direction:column;gap:.1rem}
+  .sdg-goalchip .glabel{font-family:'Outfit',sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+  .sdg-goalchip .gname{font-family:'Cinzel',serif;font-weight:600;color:var(--parchment);font-size:1.05rem;line-height:1.1}
   .sdg-panel .sdg-mean{color:var(--mist);font-size:.98rem;font-style:italic;margin-bottom:.55rem}
-  .sdg-panel .sdg-ideas{list-style:none;display:flex;flex-direction:column;gap:.32rem}
-  .sdg-panel .sdg-ideas li{color:var(--mist);font-size:.95rem;padding-left:1.2rem;position:relative}
-  .sdg-panel .sdg-ideas li::before{content:"\2726";position:absolute;left:0;color:var(--sdg-color,#5fe6cf);font-size:.8rem;top:.15rem}
+  .sdg-panel .sdg-ideas{list-style:none;display:flex;flex-direction:column;gap:.34rem}
+  .sdg-panel .sdg-ideas li{color:var(--mist);font-size:.95rem;padding-left:1.5rem;position:relative;display:flex;align-items:flex-start;gap:.5rem}
+  .sdg-panel .sdg-ideas li .icon{width:13px;height:13px;color:var(--sdg-color,#5fe6cf);flex-shrink:0;margin-top:.2rem;position:absolute;left:0}
+  .sdg-panel .sdg-ideas li span{display:block}
 
-  /* ===== CAROUSEL ===== */
-  .carousel{position:relative;min-height:330px;background:#06041a;overflow:hidden}
+  /* CAROUSEL */
+  .carousel{position:relative;min-height:332px;background:rgba(6,18,13,.6);overflow:hidden}
   .track{display:flex;height:100%;transition:transform .6s cubic-bezier(.45,.05,.25,1)}
-  .slide{min-width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1.8rem 1.6rem;gap:.85rem;background:radial-gradient(120% 80% at 50% 0%, var(--card-glow,rgba(242,201,76,.16)), transparent 65%)}
-  .slide .ph-icon{font-size:2.5rem;filter:drop-shadow(0 0 14px var(--card-glow,rgba(242,201,76,.5)));animation:iconFloat 4s ease-in-out infinite}
+  .slide{min-width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1.8rem 1.6rem;gap:.85rem;background:radial-gradient(120% 80% at 50% 0%, var(--card-glow,rgba(242,207,107,.16)), transparent 65%)}
+  .slide .ph-icon{width:50px;height:50px;color:var(--gold-bright);filter:drop-shadow(0 0 14px var(--card-glow,rgba(242,207,107,.6)));animation:iconFloat 4s ease-in-out infinite}
+  .slide .ph-icon svg{width:100%;height:100%}
   .slide .ph-label{font-family:'Outfit',sans-serif;letter-spacing:.16em;text-transform:uppercase;font-size:.68rem;color:var(--gold)}
   .slide h5{font-family:'Cinzel',serif;font-weight:600;font-size:1.18rem;color:var(--parchment)}
   .slide p{font-size:.98rem;color:var(--mist);max-width:30ch}
-  .slide .search-btn{margin-top:.3rem;font-family:'Outfit',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;color:var(--ink);background:linear-gradient(180deg,var(--gold-bright),var(--gold));padding:.6rem 1.1rem;border-radius:999px;text-decoration:none;box-shadow:0 0 18px rgba(242,201,76,.45);transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .25s;position:relative;overflow:hidden}
+  .slide .search-btn{margin-top:.3rem;display:inline-flex;align-items:center;gap:.45rem;font-family:'Outfit',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;color:var(--ink);background:linear-gradient(180deg,var(--gold-bright),var(--gold));padding:.6rem 1.1rem;border-radius:999px;text-decoration:none;box-shadow:0 0 18px rgba(242,207,107,.45);transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .25s;position:relative;overflow:hidden}
+  .slide .search-btn .icon{width:14px;height:14px;color:var(--ink)}
   .slide .search-btn::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transition:left .6s}
-  .slide .search-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 0 30px rgba(242,201,76,.7)}
+  .slide .search-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 0 30px rgba(242,207,107,.7)}
   .slide .search-btn:hover::after{left:130%}
-  .car-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:38px;height:38px;border-radius:50%;border:1px solid var(--hair);background:rgba(8,6,28,.7);color:var(--gold-bright);font-size:1.15rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .25s,transform .2s,box-shadow .25s}
-  .car-btn:hover{background:rgba(58,29,99,.9);transform:translateY(-50%) scale(1.12);box-shadow:0 0 18px var(--card-glow,rgba(242,201,76,.5))}
+  .car-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:38px;height:38px;border-radius:50%;border:1px solid var(--hair);background:rgba(6,18,13,.75);color:var(--gold-bright);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .25s,transform .2s,box-shadow .25s}
+  .car-btn .icon{width:18px;height:18px}
+  .car-btn:hover{background:rgba(26,82,56,.9);transform:translateY(-50%) scale(1.12);box-shadow:0 0 18px var(--card-glow,rgba(242,207,107,.5))}
   .car-btn.prev{left:.7rem}.car-btn.next{right:.7rem}
   .dots{position:absolute;bottom:.9rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:.5rem}
-  .dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(248,241,222,.3);cursor:pointer;padding:0;transition:background .3s,transform .3s,box-shadow .3s}
+  .dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(244,239,224,.3);cursor:pointer;padding:0;transition:background .3s,transform .3s,box-shadow .3s}
   .dots button.active{background:var(--gold-bright);transform:scale(1.4);box-shadow:0 0 8px var(--gold-bright)}
   @media(max-width:780px){.card .grid2{grid-template-columns:1fr}.carousel{min-height:300px;order:2}.card .info{order:1}}
 
-  /* music */
+  /* MUSIC SECTION */
   .music-grid{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.8rem}
-  .music-card{background:rgba(8,6,28,.55);border:1px solid var(--hair);border-radius:20px;overflow:hidden;box-shadow:0 0 30px rgba(0,0,0,.3);transition:transform .4s cubic-bezier(.34,1.3,.64,1),box-shadow .4s}
-  .music-card:hover{transform:translateY(-6px);box-shadow:0 12px 50px rgba(0,0,0,.5),0 0 44px rgba(242,201,76,.25)}
+  .music-card{background:rgba(8,24,17,.62);border:1px solid var(--hair);border-radius:20px;overflow:hidden;box-shadow:0 0 30px rgba(0,0,0,.35);transition:transform .4s cubic-bezier(.34,1.3,.64,1),box-shadow .4s}
+  .music-card:hover{transform:translateY(-6px);box-shadow:0 12px 50px rgba(0,0,0,.5),0 0 44px rgba(242,207,107,.25)}
   .music-card .vid{position:relative;width:100%;aspect-ratio:16/9;background:#000}
   .music-card iframe{width:100%;height:100%;border:0;display:block}
   .music-card .cap{padding:1.1rem 1.3rem 1.4rem}
@@ -176,22 +206,23 @@
   .music-card h4{font-family:'Cinzel',serif;font-weight:600;font-size:1.25rem;color:var(--parchment);margin:.25rem 0 .1rem}
   .music-card .artist{font-style:italic;color:var(--mist);font-size:1.02rem}
 
-  /* run of show */
+  /* RUN OF SHOW */
   .ros-inner{max-width:820px;margin:0 auto}
   .ros-group{font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:2rem 0 .5rem;padding-bottom:.4rem;border-bottom:1px solid var(--hair)}
   .ros-group:first-child{margin-top:0}
-  .slot{display:grid;grid-template-columns:128px 1fr;gap:1.3rem;padding:.85rem 0;border-bottom:1px solid rgba(242,201,76,.12);align-items:baseline;transition:padding-left .3s,background .3s;border-radius:8px}
-  .slot:hover{padding-left:.8rem;background:rgba(242,201,76,.05)}
+  .slot{display:grid;grid-template-columns:128px 1fr;gap:1.3rem;padding:.85rem 0;border-bottom:1px solid rgba(242,207,107,.12);align-items:baseline;transition:padding-left .3s,background .3s;border-radius:8px}
+  .slot:hover{padding-left:.8rem;background:rgba(242,207,107,.05)}
   .slot .time{font-family:'Outfit',sans-serif;font-weight:500;font-size:.9rem;color:var(--gold)}
   .slot .what{color:var(--parchment);font-size:1.12rem}
   .slot .what span{display:block;color:var(--mist-dim);font-size:.94rem;font-style:italic;margin-top:.12rem}
+  .slot .star-ic{display:inline-flex;width:13px;height:13px;color:var(--gold);vertical-align:middle;margin-left:.3rem}
   @media(max-width:620px){.slot{grid-template-columns:92px 1fr;gap:.9rem}}
   .note{max-width:740px;margin:2.4rem auto 0;text-align:center;color:var(--mist-dim);font-size:1rem;font-style:italic;border:1px dashed var(--hair);border-radius:14px;padding:1.2rem 1.4rem}
 
-  footer{text-align:center;padding:4rem 1.5rem 5rem;background:var(--ink);color:var(--mist-dim);position:relative}
-  footer img{width:64px;height:64px;object-fit:contain;margin-bottom:1rem;filter:drop-shadow(0 0 14px rgba(242,201,76,.5));animation:gentleBob 4s ease-in-out infinite}
+  footer{text-align:center;padding:4rem 1.5rem 5rem;position:relative}
+  footer img{width:64px;height:64px;object-fit:contain;margin-bottom:1rem;filter:drop-shadow(0 0 14px rgba(242,207,107,.5));animation:gentleBob 4s ease-in-out infinite}
   footer .mark{font-family:'Cinzel Decorative',serif;font-weight:700;letter-spacing:.04em;font-size:1.15rem}
-  footer .fine{font-family:'Outfit',sans-serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-top:.8rem}
+  footer .fine{font-family:'Outfit',sans-serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-top:.8rem;color:var(--mist-dim)}
 
   .reveal{opacity:0;transform:translateY(34px) scale(.98);transition:opacity .8s cubic-bezier(.2,.6,.3,1),transform .8s cubic-bezier(.2,.6,.3,1)}
   .reveal.in{opacity:1;transform:none}
@@ -199,10 +230,23 @@
 </style>
 </head>
 <body>
-<div class="atmosphere" aria-hidden="true">
-  <div class="aurora a1"></div><div class="aurora a2"></div><div class="aurora a3"></div><div class="aurora a4"></div>
-  <canvas id="stars"></canvas><canvas id="sparkles"></canvas><canvas id="fireflies"></canvas>
+<div class="bg-layer" aria-hidden="true">
+  <div class="bg-forest"></div>
+  <div class="bg-tint"></div>
+  <div class="aurora a1"></div><div class="aurora a2"></div><div class="aurora a3"></div>
 </div>
+<canvas id="stars" aria-hidden="true"></canvas>
+<canvas id="sparkles" aria-hidden="true"></canvas>
+<canvas id="fireflies" aria-hidden="true"></canvas>
+
+<!-- music -->
+<div id="yt-holder"></div>
+<div class="music-hint" id="musicHint">Tap the note for music &#9835;</div>
+<button class="music-fab" id="musicFab" aria-label="Play background music">
+  <span class="icon micon" data-ic="music"></span>
+  <span class="eqbars"><i></i><i></i><i></i><i></i></span>
+  <span class="mtext" id="mtext">Play music</span>
+</button>
 
 <div class="wrap">
   <div class="topbar">
@@ -211,51 +255,49 @@
   </div>
 
   <header class="hero">
-    <div class="moon" aria-hidden="true"></div>
-    <svg class="vine-frame tl" viewBox="0 0 200 200" fill="none" aria-hidden="true"><path d="M2 2 C2 60 8 110 40 140 C70 168 120 175 180 178" stroke="#6cc28a" stroke-width="2.4"/><path d="M2 2 C60 4 110 10 140 42 C168 72 175 122 178 180" stroke="#6cc28a" stroke-width="2.4"/><ellipse class="leaf" cx="46" cy="22" rx="11" ry="5" fill="#6cc28a" transform="rotate(35 46 22)" style="animation-delay:1.2s"/><ellipse class="leaf" cx="22" cy="46" rx="11" ry="5" fill="#6cc28a" transform="rotate(-55 22 46)" style="animation-delay:1.5s"/><ellipse class="leaf" cx="90" cy="30" rx="9" ry="4" fill="#8fd6a6" transform="rotate(30 90 30)" style="animation-delay:1.9s"/><ellipse class="leaf" cx="30" cy="90" rx="9" ry="4" fill="#8fd6a6" transform="rotate(-60 30 90)" style="animation-delay:2.1s"/><circle class="leaf" cx="140" cy="42" r="3.5" fill="#ffe9a8" style="animation-delay:2.4s"/><circle class="leaf" cx="42" cy="140" r="3.5" fill="#ffe9a8" style="animation-delay:2.6s"/></svg>
-    <svg class="vine-frame tr" viewBox="0 0 200 200" fill="none" aria-hidden="true"><path d="M2 2 C2 60 8 110 40 140 C70 168 120 175 180 178" stroke="#6cc28a" stroke-width="2.4"/><path d="M2 2 C60 4 110 10 140 42 C168 72 175 122 178 180" stroke="#6cc28a" stroke-width="2.4"/><ellipse class="leaf" cx="46" cy="22" rx="11" ry="5" fill="#6cc28a" transform="rotate(35 46 22)" style="animation-delay:1.3s"/><ellipse class="leaf" cx="22" cy="46" rx="11" ry="5" fill="#6cc28a" transform="rotate(-55 22 46)" style="animation-delay:1.6s"/><circle class="leaf" cx="140" cy="42" r="3.5" fill="#ffe9a8" style="animation-delay:2.5s"/></svg>
-    <svg class="vine-frame bl" viewBox="0 0 200 200" fill="none" aria-hidden="true"><path d="M2 2 C2 60 8 110 40 140 C70 168 120 175 180 178" stroke="#6cc28a" stroke-width="2.4"/><path d="M2 2 C60 4 110 10 140 42 C168 72 175 122 178 180" stroke="#6cc28a" stroke-width="2.4"/><ellipse class="leaf" cx="46" cy="22" rx="11" ry="5" fill="#6cc28a" transform="rotate(35 46 22)" style="animation-delay:1.4s"/><circle class="leaf" cx="140" cy="42" r="3.5" fill="#ffe9a8" style="animation-delay:2.6s"/></svg>
-    <svg class="vine-frame br" viewBox="0 0 200 200" fill="none" aria-hidden="true"><path d="M2 2 C2 60 8 110 40 140 C70 168 120 175 180 178" stroke="#6cc28a" stroke-width="2.4"/><path d="M2 2 C60 4 110 10 140 42 C168 72 175 122 178 180" stroke="#6cc28a" stroke-width="2.4"/><ellipse class="leaf" cx="46" cy="22" rx="11" ry="5" fill="#6cc28a" transform="rotate(35 46 22)" style="animation-delay:1.5s"/><circle class="leaf" cx="140" cy="42" r="3.5" fill="#ffe9a8" style="animation-delay:2.7s"/></svg>
-    <img class="logo" src="assets/gis-logo.png" alt="Golden International School">
-    <p class="eyebrow">Golden International School presents</p>
-    <h1 class="shimmer-text">Guardians<br>of Our World</h1>
-    <p class="subt">Graduation &amp; End-of-Year Presentation</p>
-    <div class="flourish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z" fill="var(--gold)"/></svg></div>
-    <p class="tagline">Every child is a guardian of something — and as they grow, what they protect grows with them.</p>
-    <div class="meta">
-      <div><span class="label">Date</span><strong>22 August 2026</strong></div>
-      <div><span class="label">Graduates</span><strong>Kinder 3 &amp; Year 5</strong></div>
-      <div><span class="label">Performing</span><strong>Pre-K to Year 7</strong></div>
+    <div class="hero-bg" aria-hidden="true"><img src="assets/forest-hero.jpg" alt=""><div class="hb-tint"></div></div>
+    <div class="hero-inner">
+      <img class="logo" src="assets/gis-logo.png" alt="Golden International School">
+      <p class="eyebrow">Golden International School presents</p>
+      <h1 class="shimmer-text">Guardians<br>of Our World</h1>
+      <p class="subt">Graduation &amp; End-of-Year Presentation</p>
+      <div class="flourish" aria-hidden="true"><span class="icon" data-ic="sparkles"></span></div>
+      <p class="tagline">Every child is a guardian of something — and as they grow, what they protect grows with them.</p>
+      <div class="meta">
+        <div><span class="label">Date</span><strong>22 August 2026</strong></div>
+        <div><span class="label">Graduates</span><strong>Kinder 3 &amp; Year 5</strong></div>
+        <div><span class="label">Performing</span><strong>Pre-K to Year 7</strong></div>
+      </div>
+      <p class="scrollcue">Begin the ascent &#8595;</p>
     </div>
-    <p class="scrollcue">Begin the ascent &#8595;</p>
   </header>
 
-  <section id="concept" class="block band-intro">
+  <section id="concept" class="block band-a">
     <div class="sec-head reveal">
       <p class="eyebrow">For Teachers — Internal Reference</p>
-      <div class="flourish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="var(--gold)"/></svg></div>
+      <div class="flourish" aria-hidden="true"><span class="icon" data-ic="leaf"></span></div>
       <h2 class="shimmer-text">One world. Eleven guardians. A journey that grows with our children.</h2>
       <p>Each realm carries its own little world: a theme, a guardian to protect, characters to become, and ideas to bring it to life on stage. The youngest guardians bring pure magic. From Year 4, each realm also carries a real United Nations Global Goal — a cause worth protecting — with concrete ways to show it in the performance.</p>
     </div>
   </section>
 
-  <section id="realms" class="block band-forest">
+  <section id="realms" class="block band-b">
     <div class="tier-tag reveal"><span class="eyebrow">The Little Guardians</span><h3>Early Years</h3><p>Pure magic, pure joy — the woodland floor of our world.</p></div>
     <div id="cards-ey"></div>
   </section>
-  <section class="block band-royal">
+  <section class="block band-c">
     <div class="tier-tag reveal"><span class="eyebrow">The Brave Guardians</span><h3>Lower Primary</h3><p>The world grows wider — and a little more heroic.</p></div>
     <div id="cards-lp"></div>
   </section>
-  <section class="block band-celest">
+  <section class="block band-b">
     <div class="tier-tag reveal"><span class="eyebrow">The Guardians of Tomorrow</span><h3>Upper Primary &middot; The Global Goals</h3><p>Where magic meets meaning — each realm protects a real cause.</p></div>
     <div id="cards-up"></div>
   </section>
 
-  <section id="music" class="block band-music">
+  <section id="music" class="block band-c">
     <div class="sec-head reveal">
       <p class="eyebrow">The Music</p>
-      <div class="flourish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z" fill="var(--gold)"/></svg></div>
+      <div class="flourish" aria-hidden="true"><span class="icon" data-ic="music"></span></div>
       <h2 class="shimmer-text">Ceremony Songs</h2>
       <p>The three confirmed songs. Press play to preview.</p>
     </div>
@@ -267,7 +309,7 @@
     <p class="note reveal">Per-level performance songs are not yet confirmed. Once the homeroom song list is set, each realm card can carry its own embedded track too.</p>
   </section>
 
-  <section id="order" class="block band-ros">
+  <section id="order" class="block band-a">
     <div class="sec-head reveal">
       <p class="eyebrow">Order of the Day</p>
       <h2 class="shimmer-text">Saturday, 22 August 2026</h2>
@@ -282,18 +324,17 @@
       <div class="slot"><div class="time">9:45 – 10:00</div><div class="what">Graduation Speech<span>Two highest-honours students (TBA)</span></div></div>
       <div class="slot"><div class="time">10:00 – 10:05</div><div class="what">Graduation Song<span>Today My Life Begins — Bruno Mars</span></div></div>
       <div class="slot"><div class="time">10:05 – 10:15</div><div class="what">Tribute to Parents<span>Thanks to You — Tyler Collins</span></div></div>
-
       <p class="ros-group">End-of-Year Presentation &middot; 6.5-min slots</p>
       <div class="slot"><div class="time">10:15 – 10:21</div><div class="what">Lao Culture Dance Presentation<span>The opening — a celebration of the culture that roots us</span></div></div>
       <div class="slot"><div class="time">10:21 – 10:28</div><div class="what">Pre-K · Woodland Friends<span>Guardians of the Forest</span></div></div>
       <div class="slot"><div class="time">10:28 – 10:34</div><div class="what">Kinder 1 · Fairies &amp; Pixies<span>Guardians of the Garden</span></div></div>
       <div class="slot"><div class="time">10:34 – 10:41</div><div class="what">Kinder 2 · Royal Kingdom<span>Guardians of the Kingdom</span></div></div>
-      <div class="slot"><div class="time">10:41 – 10:47</div><div class="what">Kinder 3 · Wizards &amp; Magic <em style="color:var(--gold);font-style:normal;font-size:.8rem">★ graduates</em><span>Guardians of Wonder</span></div></div>
+      <div class="slot"><div class="time">10:41 – 10:47</div><div class="what">Kinder 3 · Wizards &amp; Magic <span class="star-ic icon" data-ic="star"></span><span>Guardians of Wonder — graduates</span></div></div>
       <div class="slot"><div class="time">10:47 – 10:54</div><div class="what">Year 1 · Mythical Creatures<span>Guardians of Imagination</span></div></div>
       <div class="slot"><div class="time">10:54 – 11:00</div><div class="what">Year 2 · Elves &amp; Forest Guardians<span>Guardians of the Trees</span></div></div>
       <div class="slot"><div class="time">11:00 – 11:07</div><div class="what">Year 3 · Knights &amp; Brave Heroes<span>Guardians of Courage</span></div></div>
       <div class="slot"><div class="time">11:07 – 11:13</div><div class="what">Year 4 · Enchanted Nobility<span>Guardians of Fairness — SDG 16</span></div></div>
-      <div class="slot"><div class="time">11:13 – 11:20</div><div class="what">Year 5 · Celestial Magic <em style="color:var(--gold);font-style:normal;font-size:.8rem">★ graduates</em><span>Guardians of the Skies — SDG 13</span></div></div>
+      <div class="slot"><div class="time">11:13 – 11:20</div><div class="what">Year 5 · Celestial Magic <span class="star-ic icon" data-ic="star"></span><span>Guardians of the Skies — SDG 13</span></div></div>
       <div class="slot"><div class="time">11:20 – 11:26</div><div class="what">Year 6 · Legendary Protectors<span>Guardians of Nature — SDG 15</span></div></div>
       <div class="slot"><div class="time">11:26 – 11:33</div><div class="what">Year 7 · The Enchanted Court<span>Guardians of the Future — SDG 17</span></div></div>
       <div class="slot"><div class="time">11:33 – 11:39</div><div class="what">Foreign Teachers — Finale<span>Count on Me — Bruno Mars · all guardians united</span></div></div>
@@ -304,97 +345,180 @@
 
   <footer>
     <img src="assets/gis-logo.png" alt="GIS">
-    <p class="mark shimmer-text">✦ Guardians of Our World ✦</p>
+    <p class="mark shimmer-text">Guardians of Our World</p>
     <p class="fine">Golden International School · Vientiane · 2026 · Internal Teacher Reference</p>
   </footer>
 </div>
 <script>
+const ICONS={"trees": "<path d=\"M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10a3 3 0 0 1 6 0Z\" /> <path d=\"M7 16v6\" /> <path d=\"M13 19v3\" /> <path d=\"M12 19h8.3a1 1 0 0 0 .7-1.7L18 14h.3a1 1 0 0 0 .7-1.7L16 9h.2a1 1 0 0 0 .8-1.7L13 3l-1.4 1.5\" />", "flower-2": "<path d=\"M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1\" /> <circle cx=\"12\" cy=\"8\" r=\"2\" /> <path d=\"M12 10v12\" /> <path d=\"M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z\" /> <path d=\"M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z\" />", "crown": "<path d=\"M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z\" /> <path d=\"M5 21h14\" />", "sparkles": "<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\" /> <path d=\"M20 2v4\" /> <path d=\"M22 4h-4\" /> <circle cx=\"4\" cy=\"20\" r=\"2\" />", "wand-2": "<path d=\"m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72\" /> <path d=\"m14 7 3 3\" /> <path d=\"M5 6v4\" /> <path d=\"M19 14v4\" /> <path d=\"M10 2v2\" /> <path d=\"M7 8H3\" /> <path d=\"M21 16h-4\" /> <path d=\"M11 3H9\" />", "rabbit": "<path d=\"M13 16a3 3 0 0 1 2.24 5\" /> <path d=\"M18 12h.01\" /> <path d=\"M18 21h-8a4 4 0 0 1-4-4 7 7 0 0 1 7-7h.2L9.6 6.4a1 1 0 1 1 2.8-2.8L15.8 7h.2c3.3 0 6 2.7 6 6v1a2 2 0 0 1-2 2h-1a3 3 0 0 0-3 3\" /> <path d=\"M20 8.54V4a2 2 0 1 0-4 0v3\" /> <path d=\"M7.612 12.524a3 3 0 1 0-1.6 4.3\" />", "bird": "<path d=\"M16 7h.01\" /> <path d=\"M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20\" /> <path d=\"m20 7 2 .5-2 .5\" /> <path d=\"M10 18v3\" /> <path d=\"M14 17.75V21\" /> <path d=\"M7 18a6 6 0 0 0 3.84-10.61\" />", "shield": "<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" />", "sword": "<path d=\"m11 19-6-6\" /> <path d=\"m5 21-2-2\" /> <path d=\"m8 16-4 4\" /> <path d=\"M9.5 17.5 21 6V3h-3L6.5 14.5\" />", "castle": "<path d=\"M10 5V3\" /> <path d=\"M14 5V3\" /> <path d=\"M15 21v-3a3 3 0 0 0-6 0v3\" /> <path d=\"M18 3v8\" /> <path d=\"M18 5H6\" /> <path d=\"M22 11H2\" /> <path d=\"M22 9v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9\" /> <path d=\"M6 3v8\" />", "leaf": "<path d=\"M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z\" /> <path d=\"M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12\" />", "moon": "<path d=\"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401\" />", "star": "<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\" />", "sun": "<circle cx=\"12\" cy=\"12\" r=\"4\" /> <path d=\"M12 2v2\" /> <path d=\"M12 20v2\" /> <path d=\"m4.93 4.93 1.41 1.41\" /> <path d=\"m17.66 17.66 1.41 1.41\" /> <path d=\"M2 12h2\" /> <path d=\"M20 12h2\" /> <path d=\"m6.34 17.66-1.41 1.41\" /> <path d=\"m19.07 4.93-1.41 1.41\" />", "mountain-snow": "<path d=\"m8 3 4 8 5-5 5 15H2L8 3z\" /> <path d=\"M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19\" />", "gem": "<path d=\"M10.5 3 8 9l4 13 4-13-2.5-6\" /> <path d=\"M17 3a2 2 0 0 1 1.6.8l3 4a2 2 0 0 1 .013 2.382l-7.99 10.986a2 2 0 0 1-3.247 0l-7.99-10.986A2 2 0 0 1 2.4 7.8l2.998-3.997A2 2 0 0 1 7 3z\" /> <path d=\"M2 9h20\" />", "scale": "<path d=\"M12 3v18\" /> <path d=\"m19 8 3 8a5 5 0 0 1-6 0zV7\" /> <path d=\"M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1\" /> <path d=\"m5 8 3 8a5 5 0 0 1-6 0zV7\" /> <path d=\"M7 21h10\" />", "gavel": "<path d=\"m14 13-8.381 8.38a1 1 0 0 1-3.001-3l8.384-8.381\" /> <path d=\"m16 16 6-6\" /> <path d=\"m21.5 10.5-8-8\" /> <path d=\"m8 8 6-6\" /> <path d=\"m8.5 7.5 8 8\" />", "globe": "<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20\" /> <path d=\"M2 12h20\" />", "droplets": "<path d=\"M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z\" /> <path d=\"M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97\" />", "fish": "<path d=\"M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z\" /> <path d=\"M18 12v.5\" /> <path d=\"M16 17.93a9.77 9.77 0 0 1 0-11.86\" /> <path d=\"M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 18.03 7 16 7 13.33\" /> <path d=\"M10.46 7.26C10.2 5.88 9.17 4.24 8 3h5.8a2 2 0 0 1 1.98 1.67l.23 1.4\" /> <path d=\"m16.01 17.93-.23 1.4A2 2 0 0 1 13.8 21H9.5a5.96 5.96 0 0 0 1.49-3.98\" />", "bug": "<path d=\"M12 20v-9\" /> <path d=\"M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z\" /> <path d=\"M14.12 3.88 16 2\" /> <path d=\"M21 21a4 4 0 0 0-3.81-4\" /> <path d=\"M21 5a4 4 0 0 1-3.55 3.97\" /> <path d=\"M22 13h-4\" /> <path d=\"M3 21a4 4 0 0 1 3.81-4\" /> <path d=\"M3 5a4 4 0 0 0 3.55 3.97\" /> <path d=\"M6 13H2\" /> <path d=\"m8 2 1.88 1.88\" /> <path d=\"M9 7.13V6a3 3 0 1 1 6 0v1.13\" />", "venetian-mask": "<path d=\"M18 11c-1.5 0-2.5.5-3 2\" /> <path d=\"M4 6a2 2 0 0 0-2 2v4a5 5 0 0 0 5 5 8 8 0 0 1 5 2 8 8 0 0 1 5-2 5 5 0 0 0 5-5V8a2 2 0 0 0-2-2h-3a8 8 0 0 0-5 2 8 8 0 0 0-5-2z\" /> <path d=\"M6 11c1.5 0 2.5.5 3 2\" />", "drama": "<path d=\"M10 11h.01\" /> <path d=\"M14 6h.01\" /> <path d=\"M18 6h.01\" /> <path d=\"M6.5 13.1h.01\" /> <path d=\"M22 5c0 9-4 12-6 12s-6-3-6-12c0-2 2-3 6-3s6 1 6 3\" /> <path d=\"M17.4 9.9c-.8.8-2 .8-2.8 0\" /> <path d=\"M10.1 7.1C9 7.2 7.7 7.7 6 8.6c-3.5 2-4.7 3.9-3.7 5.6 4.5 7.8 9.5 8.4 11.2 7.4.9-.5 1.9-2.1 1.9-4.7\" /> <path d=\"M9.1 16.5c.3-1.1 1.4-1.7 2.4-1.4\" />", "feather": "<path d=\"M12.67 19a2 2 0 0 0 1.416-.588l6.154-6.172a6 6 0 0 0-8.49-8.49L5.586 9.914A2 2 0 0 0 5 11.328V18a1 1 0 0 0 1 1z\" /> <path d=\"M16 8 2 22\" /> <path d=\"M17.5 15H9\" />", "swords": "<polyline points=\"14.5 17.5 3 6 3 3 6 3 17.5 14.5\" /> <line x1=\"13\" x2=\"19\" y1=\"19\" y2=\"13\" /> <line x1=\"16\" x2=\"20\" y1=\"16\" y2=\"20\" /> <line x1=\"19\" x2=\"21\" y1=\"21\" y2=\"19\" /> <polyline points=\"14.5 6.5 18 3 21 3 21 6 17.5 9.5\" /> <line x1=\"5\" x2=\"9\" y1=\"14\" y2=\"18\" /> <line x1=\"7\" x2=\"4\" y1=\"17\" y2=\"20\" /> <line x1=\"3\" x2=\"5\" y1=\"19\" y2=\"21\" />", "trophy": "<path d=\"M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978\" /> <path d=\"M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978\" /> <path d=\"M18 9h1.5a1 1 0 0 0 0-5H18\" /> <path d=\"M4 22h16\" /> <path d=\"M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z\" /> <path d=\"M6 9H4.5a1 1 0 0 1 0-5H6\" />", "music": "<path d=\"M9 18V5l12-2v13\" /> <circle cx=\"6\" cy=\"18\" r=\"3\" /> <circle cx=\"18\" cy=\"16\" r=\"3\" />", "volume-2": "<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\" /> <path d=\"M16 9a5 5 0 0 1 0 6\" /> <path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\" />", "volume-x": "<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\" /> <line x1=\"22\" x2=\"16\" y1=\"9\" y2=\"15\" /> <line x1=\"16\" x2=\"22\" y1=\"9\" y2=\"15\" />", "chevron-left": "<path d=\"m15 18-6-6 6-6\" />", "chevron-right": "<path d=\"m9 18 6-6-6-6\" />", "x": "<path d=\"M18 6 6 18\" /> <path d=\"m6 6 12 12\" />"};
+
+  function ic(name){return `<span class="icon">${ICONS[name]?`<svg viewBox="0 0 24 24">${ICONS[name]}</svg>`:''}</span>`;}
+  function svgIcon(name){return ICONS[name]?`<svg viewBox="0 0 24 24">${ICONS[name]}</svg>`:'';}
+  // hydrate any data-ic placeholders
+  document.querySelectorAll('[data-ic]').forEach(el=>{el.innerHTML=svgIcon(el.getAttribute('data-ic'));});
+
+  // ===== ILLUSTRATED SCENES (SVG, no emoji) =====
+  function sceneFor(title){
+    const S={
+      'Woodland Friends':`<svg class="scene-art" viewBox="0 0 400 154" preserveAspectRatio="xMidYMax slice">
+        <g opacity=".5" fill="#0c3322"><polygon points="20,144 44,74 68,144"/><polygon points="150,144 178,60 206,144"/><polygon points="300,144 326,72 352,144"/></g>
+        <g opacity=".85" fill="#13502f"><polygon points="70,146 100,52 130,146"/><polygon points="215,146 245,48 275,146"/><polygon points="335,146 362,66 389,146"/></g>
+        <g fill="#1c7046"><polygon points="0,148 32,80 64,148"/><polygon points="115,148 152,38 189,148"/><polygon points="255,148 290,70 325,148"/></g>
+        <rect y="142" width="400" height="14" fill="#08251d"/>
+        <circle class="twk" cx="120" cy="62" r="2.6" fill="#ffe9a8"/><circle class="twk2" cx="250" cy="52" r="2.2" fill="#aef0c4"/><circle class="twk3" cx="330" cy="76" r="2.4" fill="#ffe9a8"/><circle class="bob" cx="60" cy="94" r="2" fill="#ffd17a"/></svg>`,
+      'Fairies & Pixies':`<svg class="scene-art" viewBox="0 0 400 154" preserveAspectRatio="xMidYMax slice">
+        <g stroke="#3a7d54" stroke-width="3" fill="none" opacity=".8"><path class="sway" d="M60 150 Q56 112 64 92"/><path class="sway2" d="M130 150 Q136 108 128 88"/><path class="sway" d="M220 150 Q216 114 224 94"/><path class="sway2" d="M310 150 Q316 110 308 90"/><path class="sway" d="M360 150 Q356 118 364 100"/></g>
+        <g><circle cx="64" cy="88" r="10" fill="#ff9ec4"/><circle cx="128" cy="84" r="9" fill="#ffd17a"/><circle cx="224" cy="90" r="10" fill="#c4a9ff"/><circle cx="308" cy="86" r="9" fill="#ff9ec4"/><circle cx="364" cy="96" r="8" fill="#ffd17a"/>
+          <circle cx="64" cy="88" r="3.5" fill="#fff3c0"/><circle cx="128" cy="84" r="3" fill="#fff3c0"/><circle cx="224" cy="90" r="3.5" fill="#fff3c0"/><circle cx="308" cy="86" r="3" fill="#fff3c0"/></g>
+        <g fill="#ffe9a8"><path class="twk" d="M100 52 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"/><path class="twk2" d="M270 46 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6z"/><path class="twk3" d="M180 66 l1.4 3.5 3.5 1.4 -3.5 1.4 -1.4 3.5 -1.4 -3.5 -3.5 -1.4 3.5 -1.4z"/></g></svg>`,
+      'Royal Kingdom':`<svg class="scene-art" viewBox="0 0 400 154" preserveAspectRatio="xMidYMax slice">
+        <g fill="#5a3a72" opacity=".9"><rect x="64" y="80" width="46" height="66"/><rect x="176" y="54" width="56" height="92"/><rect x="292" y="82" width="46" height="64"/></g>
+        <g fill="#7a52a0"><polygon points="64,80 87,48 110,80"/><polygon points="176,54 204,16 232,54"/><polygon points="292,82 315,50 338,82"/></g>
+        <g fill="#2a1a44"><rect x="80" y="102" width="12" height="44" rx="6"/><rect x="196" y="80" width="16" height="66" rx="8"/><rect x="310" y="104" width="12" height="42" rx="6"/></g>
+        <g stroke="#ffe9a8" stroke-width="2"><line x1="87" y1="48" x2="87" y2="32"/><line x1="204" y1="16" x2="204" y2="0"/><line x1="315" y1="50" x2="315" y2="34"/></g>
+        <g fill="#ff9ec4"><polygon points="87,32 87,42 100,37"/><polygon points="204,0 204,11 218,5"/><polygon points="315,34 315,44 328,39"/></g>
+        <rect y="144" width="400" height="12" fill="#1c1230"/></svg>`,
+      'Wizards & Magic':`<svg class="scene-art" viewBox="0 0 400 154" preserveAspectRatio="xMidYMax slice">
+        <path d="M300 42 a26 26 0 1 0 8 30 a20 20 0 1 1 -8 -30z" fill="#ffe9a8" opacity=".9" class="bob"/>
+        <g fill="#2a1a5c" opacity=".95"><rect x="180" y="58" width="40" height="88"/></g>
+        <polygon points="178,58 200,18 222,58" fill="#4a2d80"/>
+        <circle cx="200" cy="82" r="6" fill="#ffd17a" class="twk"/>
+        <rect x="190" y="102" width="20" height="26" fill="#1a1040"/>
+        <g fill="#ffe9a8"><path class="twk" d="M70 50 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"/><path class="twk2" d="M120 82 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6z"/><path class="twk3" d="M330 92 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6z"/><path class="twk" d="M260 112 l1.4 3.5 3.5 1.4 -3.5 1.4 -1.4 3.5 -1.4 -3.5 -3.5 -1.4 3.5 -1.4z"/></g>
+        <rect y="144" width="400" height="12" fill="#140a2e"/></svg>`,
+      'Mythical Creatures':`<svg class="scene-art" viewBox="0 0 400 154" preserveAspectRatio="xMidYMax slice">
+        <g fill="none" stroke-width="8" opacity=".7"><path d="M30 164 A170 170 0 0 1 370 164" stroke="#ff9ec4"/><path d="M48 164 A152 152 0 0 1 352 164" stroke="#ffd17a"/><path d="M66 164 A134 134 0 0 1 334 164" stroke="#7ee0c4"/><path d="M84 164 A116 116 0 0 1 316 164" stroke="#c4a9ff"/></g>
+        <ellipse class="driftx" cx="90" cy="48" rx="26" ry="10" fill="#fff" opacity=".18"/><ellipse cx="300" cy="42" rx="30" ry="11" fill="#fff" opacity=".15"/>
+        <g fill="#ffe9a8"><circle class="twk" cx="200" cy="36" r="2.6"/><circle class="twk2" cx="150" cy="50" r="2.2"/><circle class="twk3" cx="250" cy="48" r="2.2"/></g></svg>`,
+      'Elves & Forest Guardians':`<svg class="scene-art" viewBox="0 0 400 154" preserveAspectRatio="xMidYMax slice">
+        <g opacity=".5" fill="#0a2e1c"><polygon points="10,146 40,56 70,146"/><polygon points="170,146 202,48 234,146"/><polygon points="320,146 348,60 376,146"/></g>
+        <g opacity=".85" fill="#10401f"><polygon points="60,148 92,38 124,148"/><polygon points="220,148 252,34 284,148"/></g>
+        <g fill="#1c6b3a"><polygon points="0,150 34,64 68,150"/><polygon points="120,150 158,26 196,150"/><polygon points="270,150 308,56 346,150"/></g>
+        <path d="M150 150 q4 -40 18 -56" stroke="#6cc28a" stroke-width="3" fill="none" opacity=".7" class="sway"/>
+        <rect y="144" width="400" height="14" fill="#06200f"/>
+        <circle class="twk" cx="158" cy="62" r="2.4" fill="#aef0c4"/><circle class="twk2" cx="250" cy="58" r="2.2" fill="#ffe9a8"/></svg>`,
+      'Knights & Brave Heroes':`<svg class="scene-art" viewBox="0 0 400 154" preserveAspectRatio="xMidYMax slice">
+        <g fill="#3a2614" opacity=".92"><rect x="30" y="80" width="340" height="66"/></g>
+        <g fill="#4a3018"><rect x="34" y="70" width="20" height="14"/><rect x="74" y="70" width="20" height="14"/><rect x="114" y="70" width="20" height="14"/><rect x="266" y="70" width="20" height="14"/><rect x="306" y="70" width="20" height="14"/><rect x="346" y="70" width="20" height="14"/></g>
+        <g fill="#2a1a0e"><rect x="186" y="98" width="28" height="48" rx="14"/></g>
+        <g><path d="M120 88 l18 0 0 14 -9 12 -9 -12z" fill="#a51c2c" class="bob"/><path d="M262 88 l18 0 0 14 -9 12 -9 -12z" fill="#1d4e7a" class="bob"/><line x1="129" y1="90" x2="129" y2="110" stroke="#ffe9a8" stroke-width="1.5"/><line x1="271" y1="90" x2="271" y2="110" stroke="#ffe9a8" stroke-width="1.5"/></g>
+        <rect y="144" width="400" height="12" fill="#1a1008"/></svg>`,
+      'Enchanted Nobility':`<svg class="scene-art" viewBox="0 0 400 154" preserveAspectRatio="xMidYMax slice">
+        <rect x="44" y="32" width="312" height="14" fill="#4a3a8a" opacity=".85"/><polygon points="200,14 350,32 50,32" fill="#3a2a6a" opacity=".7"/>
+        <g fill="#3a2a7a" opacity=".9"><rect x="60" y="46" width="16" height="100"/><rect x="120" y="46" width="16" height="100"/><rect x="264" y="46" width="16" height="100"/><rect x="324" y="46" width="16" height="100"/></g>
+        <g fill="#5a4aa0"><rect x="56" y="46" width="24" height="6"/><rect x="116" y="46" width="24" height="6"/><rect x="260" y="46" width="24" height="6"/><rect x="320" y="46" width="24" height="6"/></g>
+        <rect x="176" y="58" width="48" height="60" fill="#5a2a72" opacity=".85" class="bob"/><circle cx="200" cy="86" r="10" fill="#ffd17a" opacity=".8"/>
+        <g fill="#ffe9a8"><circle class="twk" cx="100" cy="26" r="2"/><circle class="twk2" cx="300" cy="24" r="2"/></g>
+        <rect y="144" width="400" height="12" fill="#1a1238"/></svg>`,
+      'Celestial Magic':`<svg class="scene-art" viewBox="0 0 400 154" preserveAspectRatio="xMidYMax slice">
+        <circle cx="300" cy="60" r="40" fill="#ffe9a8" opacity=".18"/>
+        <path d="M312 38 a30 30 0 1 0 10 36 a23 23 0 1 1 -10 -36z" fill="#ffe9a8" opacity=".92" class="bob"/>
+        <ellipse class="driftx" cx="80" cy="60" rx="30" ry="9" fill="#c4a9ff" opacity=".14"/>
+        <g fill="#fff"><circle class="twk" cx="60" cy="42" r="2.4"/><circle class="twk2" cx="120" cy="66" r="2"/><circle class="twk3" cx="170" cy="40" r="2.6"/><circle class="twk" cx="210" cy="74" r="2"/><circle class="twk2" cx="150" cy="98" r="2.2"/><circle class="twk3" cx="240" cy="50" r="2"/></g>
+        <g fill="#ffd17a"><path class="twk2" d="M100 102 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"/></g></svg>`,
+      'Legendary Protectors':`<svg class="scene-art" viewBox="0 0 400 154" preserveAspectRatio="xMidYMax slice">
+        <g fill="#13402b" opacity=".6"><polygon points="-10,148 80,54 170,148"/><polygon points="120,148 230,34 340,148"/><polygon points="280,148 360,62 410,148"/></g>
+        <g fill="#0e3322" opacity=".85"><polygon points="40,150 120,72 200,150"/><polygon points="220,150 300,78 380,150"/></g>
+        <g fill="#fff" opacity=".85"><polygon points="230,34 218,58 242,58"/><polygon points="120,72 112,88 128,88"/></g>
+        <path class="driftx" d="M40 52 q12 -10 24 0 q-12 6 -24 0z m24 0 q12 -10 24 0 q-12 6 -24 0z" fill="#1a1030" opacity=".7"/>
+        <g fill="#aef0c4"><circle class="twk" cx="180" cy="62" r="2.2"/><circle class="twk2" cx="320" cy="68" r="2"/></g>
+        <rect y="146" width="400" height="12" fill="#08251a"/></svg>`,
+      'The Enchanted Court':`<svg class="scene-art" viewBox="0 0 400 154" preserveAspectRatio="xMidYMax slice">
+        <g fill="#3a2470" opacity=".88"><rect x="50" y="42" width="18" height="104"/><rect x="110" y="42" width="18" height="104"/><rect x="272" y="42" width="18" height="104"/><rect x="332" y="42" width="18" height="104"/></g>
+        <path d="M150 146 Q200 32 250 146" fill="none" stroke="#ffd17a" stroke-width="3" opacity=".8"/><path d="M168 146 Q200 62 232 146" fill="#4a2d80" opacity=".6"/>
+        <polygon points="200,54 207,74 200,94 193,74" fill="#c4a9ff" class="bob"/><polygon points="200,64 203,74 200,84 197,74" fill="#ffe9a8"/>
+        <g fill="#ffe9a8"><path class="twk" d="M80 32 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"/><path class="twk2" d="M320 30 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"/><circle class="twk3" cx="200" cy="120" r="2.4"/></g>
+        <rect y="144" width="400" height="12" fill="#180f30"/></svg>`
+    };
+    return S[title]||'';
+  }
+
   const REALMS=[
-    {grp:'ey',icon:'\u{1F33F}',glow:'rgba(95,230,207,.32)',ring:'rgba(95,230,207,.6)',scene:'linear-gradient(135deg,#0f3b28,#1a5c3c)',
+    {grp:'ey',sicon:'leaf',cicon:'rabbit',glow:'rgba(95,230,207,.32)',ring:'rgba(95,230,207,.6)',scene:'linear-gradient(135deg,#0f3b28,#1a5c3c)',
       level:'Pre-Kindergarten',title:'Woodland Friends',guardian:'Guardians of the Forest',
       story:'A soft, sun-dappled forest where the smallest creatures look after every leaf, flower, and friend. Gentle, cuddly, and full of wonder.',
       chars:'Bunny, deer, fox, squirrel, owl, butterfly, bee, ladybug',
-      slides:[{i:'\u{1F407}',l:'Animal Ears & Tails',t:'Soft woodland creatures',p:'Headbands with ears, face paint, fuzzy tails',q:'kids woodland animal costume ears tail DIY'},{i:'\u{1F98A}',l:'Forest Colours',t:'Earthy palette',p:'Browns, greens, soft autumn tones',q:'children forest animal group costume brown green'},{i:'\u{1F41D}',l:'Bee & Ladybug',t:'Little bugs',p:'Striped and spotted simple costumes',q:'toddler bee ladybug costume simple'}]},
-    {grp:'ey',icon:'\u{1F9DA}',glow:'rgba(255,158,196,.32)',ring:'rgba(255,158,196,.6)',scene:'linear-gradient(135deg,#3a1f4a,#6a3a78)',
+      slides:[{ic:'rabbit',l:'Animal Ears & Tails',t:'Soft woodland creatures',p:'Headbands with ears, face paint, fuzzy tails',q:'kids woodland animal costume ears tail DIY'},{ic:'leaf',l:'Forest Colours',t:'Earthy palette',p:'Browns, greens, soft autumn tones',q:'children forest animal group costume brown green'},{ic:'bug',l:'Bee & Ladybug',t:'Little bugs',p:'Striped and spotted simple costumes',q:'toddler bee ladybug costume simple'}]},
+    {grp:'ey',sicon:'flower-2',cicon:'flower-2',glow:'rgba(255,158,196,.32)',ring:'rgba(255,158,196,.6)',scene:'linear-gradient(135deg,#3a1f4a,#6a3a78)',
       level:'Kindergarten 1',title:'Fairies & Pixies',guardian:'Guardians of the Garden',
       story:'A glittering garden at twilight, where tiny winged folk keep the flowers blooming and the dewdrops shining. Sparkle, pastels, and flutter.',
       chars:'Flower fairy, butterfly fairy, pixie, fairy prince, fairy princess',
-      slides:[{i:'\u{1F98B}',l:'Wings',t:'Fairy & butterfly wings',p:'Glitter wings, antennae, tutus',q:'kids fairy pixie costume wings DIY'},{i:'\u{1F337}',l:'Flower Crowns',t:'Garden headpieces',p:'Floral crowns and petal skirts',q:'flower fairy crown costume children'},{i:'\u2728',l:'Pastel Magic',t:'Soft shimmer',p:'Pastels, sparkle, light fabrics',q:'pixie fairy pastel costume kids'}]},
-    {grp:'ey',icon:'\u{1F451}',glow:'rgba(242,201,76,.34)',ring:'rgba(242,201,76,.6)',scene:'linear-gradient(135deg,#5a3210,#9a6a1a)',
+      slides:[{ic:'feather',l:'Wings',t:'Fairy & butterfly wings',p:'Glitter wings, antennae, tutus',q:'kids fairy pixie costume wings DIY'},{ic:'flower-2',l:'Flower Crowns',t:'Garden headpieces',p:'Floral crowns and petal skirts',q:'flower fairy crown costume children'},{ic:'sparkles',l:'Pastel Magic',t:'Soft shimmer',p:'Pastels, sparkle, light fabrics',q:'pixie fairy pastel costume kids'}]},
+    {grp:'ey',sicon:'crown',cicon:'crown',glow:'rgba(242,207,107,.34)',ring:'rgba(242,207,107,.6)',scene:'linear-gradient(135deg,#5a3210,#9a6a1a)',
       level:'Kindergarten 2',title:'Royal Kingdom',guardian:'Guardians of the Kingdom',
       story:'A bright storybook castle where kind young royals watch over their land. Crowns, capes, and bold fairytale colour.',
       chars:'Prince, princess, king, queen, royal guard',
-      slides:[{i:'\u{1F478}',l:'Crowns & Capes',t:'Storybook royalty',p:'Bright capes, crowns, sashes',q:'kids prince princess costume crown cape'},{i:'\u{1F6E1}\uFE0F',l:'Royal Guard',t:'Palace guards',p:'Tabards and toy swords',q:'child royal guard costume tabard'},{i:'\u{1F3F0}',l:'Bright & Bold',t:'Primary colours',p:'Red, blue, gold — Disney-bright',q:'storybook king queen costume children bright'}]},
-    {grp:'ey',icon:'\u{1FA84}',glow:'rgba(196,169,255,.34)',ring:'rgba(196,169,255,.6)',scene:'linear-gradient(135deg,#1c1145,#3d2480)',grad:true,
+      slides:[{ic:'crown',l:'Crowns & Capes',t:'Storybook royalty',p:'Bright capes, crowns, sashes',q:'kids prince princess costume crown cape'},{ic:'shield',l:'Royal Guard',t:'Palace guards',p:'Tabards and toy swords',q:'child royal guard costume tabard'},{ic:'castle',l:'Bright & Bold',t:'Primary colours',p:'Red, blue, gold — Disney-bright',q:'storybook king queen costume children bright'}]},
+    {grp:'ey',sicon:'wand-2',cicon:'wand-2',glow:'rgba(196,169,255,.34)',ring:'rgba(196,169,255,.6)',scene:'linear-gradient(135deg,#1c1145,#3d2480)',grad:true,
       level:'Kindergarten 3',title:'Wizards & Magic',guardian:'Guardians of Wonder',
       story:'A starlit tower of spells and friendly magic, where our littlest graduates keep wonder alive. Midnight blue, purple, and gold stars.',
       chars:'Wizard, friendly witch, sorcerer, magician, magic apprentice',
-      slides:[{i:'\u{1F9D9}',l:'Wizard Robes',t:'Starry robes & hats',p:'Pointed hats, star-patterned capes',q:'kids wizard costume robe hat stars'},{i:'\u{1FA84}',l:'Wands & Staffs',t:'Magic props',p:'Glittery wands, glowing staffs',q:'child wizard wand staff prop DIY'},{i:'\u{1F52E}',l:'Friendly Magic',t:'Warm & whimsical',p:'Purple, midnight blue, gold stars',q:'friendly wizard sorcerer costume kids purple'}]},
-    {grp:'ey',icon:'\u{1F984}',glow:'rgba(255,158,196,.32)',ring:'rgba(255,158,196,.6)',scene:'linear-gradient(135deg,#3a1f55,#7a4a9a)',
+      slides:[{ic:'wand-2',l:'Wizard Robes',t:'Starry robes & hats',p:'Pointed hats, star-patterned capes',q:'kids wizard costume robe hat stars'},{ic:'sparkles',l:'Wands & Staffs',t:'Magic props',p:'Glittery wands, glowing staffs',q:'child wizard wand staff prop DIY'},{ic:'moon',l:'Friendly Magic',t:'Warm & whimsical',p:'Purple, midnight blue, gold stars',q:'friendly wizard sorcerer costume kids purple'}]},
+    {grp:'ey',sicon:'sparkles',cicon:'sparkles',glow:'rgba(255,158,196,.32)',ring:'rgba(255,158,196,.6)',scene:'linear-gradient(135deg,#3a1f55,#7a4a9a)',
       level:'Year 1',title:'Mythical Creatures',guardian:'Guardians of Imagination',
       story:'A rainbow realm of impossible creatures — unicorns, dragons, and phoenixes that live only in the brightest imaginations.',
       chars:'Unicorn, mermaid, pegasus, phoenix, dragon',
-      slides:[{i:'\u{1F984}',l:'Unicorn & Pegasus',t:'Horns & wings',p:'Headbands with horns, feather wings',q:'kids unicorn pegasus costume horn wings'},{i:'\u{1F9DC}',l:'Mermaid',t:'Ocean shimmer',p:'Scale leggings, shell tops',q:'child mermaid costume scales DIY'},{i:'\u{1F409}',l:'Dragon & Phoenix',t:'Fire & scales',p:'Wing capes, fiery colours',q:'kids dragon phoenix costume wings'}]},
-    {grp:'lp',icon:'\u{1F332}',glow:'rgba(95,230,207,.32)',ring:'rgba(95,230,207,.6)',scene:'linear-gradient(135deg,#13402a,#236b44)',
+      slides:[{ic:'sparkles',l:'Unicorn & Pegasus',t:'Horns & wings',p:'Headbands with horns, feather wings',q:'kids unicorn pegasus costume horn wings'},{ic:'fish',l:'Mermaid',t:'Ocean shimmer',p:'Scale leggings, shell tops',q:'child mermaid costume scales DIY'},{ic:'feather',l:'Dragon & Phoenix',t:'Fire & scales',p:'Wing capes, fiery colours',q:'kids dragon phoenix costume wings'}]},
+    {grp:'lp',sicon:'trees',cicon:'trees',glow:'rgba(95,230,207,.32)',ring:'rgba(95,230,207,.6)',scene:'linear-gradient(135deg,#13402a,#236b44)',
       level:'Year 2',title:'Elves & Forest Guardians',guardian:'Guardians of the Trees',
       story:'A deep green forest kept safe by elves and woodland rangers — the first guardians who protect living things. Earthy, brave, gentle.',
       chars:'Elf, forest ranger, dryad, woodland guardian',
-      slides:[{i:'\u{1F9DD}',l:'Elf Tunics',t:'Woodland greens',p:'Green tunics, pointed ears, belts',q:'kids elf forest ranger costume green tunic'},{i:'\u{1F343}',l:'Leaf & Vine',t:'Nature accents',p:'Leaf crowns, vine wraps',q:'dryad woodland guardian leaf costume child'},{i:'\u{1F3F9}',l:'Ranger Gear',t:'Forest protectors',p:'Cloaks, toy bows, earthy tones',q:'child forest ranger cloak bow costume'}]},
-    {grp:'lp',icon:'\u{1F6E1}\uFE0F',glow:'rgba(242,201,76,.34)',ring:'rgba(242,201,76,.6)',scene:'linear-gradient(135deg,#4a2c12,#7a4a1e)',
+      slides:[{ic:'trees',l:'Elf Tunics',t:'Woodland greens',p:'Green tunics, pointed ears, belts',q:'kids elf forest ranger costume green tunic'},{ic:'leaf',l:'Leaf & Vine',t:'Nature accents',p:'Leaf crowns, vine wraps',q:'dryad woodland guardian leaf costume child'},{ic:'feather',l:'Ranger Gear',t:'Forest protectors',p:'Cloaks, toy bows, earthy tones',q:'child forest ranger cloak bow costume'}]},
+    {grp:'lp',sicon:'shield',cicon:'sword',glow:'rgba(242,207,107,.34)',ring:'rgba(242,207,107,.6)',scene:'linear-gradient(135deg,#4a2c12,#7a4a1e)',
       level:'Year 3',title:'Knights & Brave Heroes',guardian:'Guardians of Courage',
       story:'A castle courtyard of young knights learning that courage means standing up for others. Armour, shields, and noble hearts.',
       chars:'Knight, archer, shield bearer, noble warrior',
-      slides:[{i:'\u2694\uFE0F',l:'Armour',t:'Knight tabards',p:'Cardboard/foam armour, crests',q:'kids knight costume armour tabard DIY'},{i:'\u{1F6E1}\uFE0F',l:'Shields',t:'Heraldry',p:'Painted shields with crests',q:'child knight shield crest costume'},{i:'\u{1F3F9}',l:'Archers',t:'Brave warriors',p:'Quivers, capes, noble colours',q:'kids archer warrior costume cape'}]},
-    {grp:'up',icon:'\u2696\uFE0F',glow:'rgba(196,169,255,.34)',ring:'rgba(196,169,255,.6)',scene:'linear-gradient(135deg,#2a1a55,#4a2d80)',
+      slides:[{ic:'shield',l:'Armour',t:'Knight tabards',p:'Cardboard/foam armour, crests',q:'kids knight costume armour tabard DIY'},{ic:'shield',l:'Shields',t:'Heraldry',p:'Painted shields with crests',q:'child knight shield crest costume'},{ic:'swords',l:'Archers',t:'Brave warriors',p:'Quivers, capes, noble colours',q:'kids archer warrior costume cape'}]},
+    {grp:'up',sicon:'scale',cicon:'scale',glow:'rgba(196,169,255,.34)',ring:'rgba(196,169,255,.6)',scene:'linear-gradient(135deg,#2a1a55,#4a2d80)',
       level:'Year 4',title:'Enchanted Nobility',guardian:'Guardians of Fairness',
       story:'A grand council where noble guardians from many kingdoms gather to make fair and peaceful choices for all.',
       chars:'Council of Realms — diplomats, dukes, duchesses, royal advisors',
       sdg:{num:'SDG 16',color:'#00689d',name:'Peace, Justice & Strong Institutions',mean:'A fair world is a peaceful world — everyone deserves to be treated justly.',
-        ideas:['Patchwork robes stitched from many kingdom colours, showing every nation united','Carry a large \u201CTreaty of Peace\u201D scroll the council \u201Csigns\u201D mid-performance','Hold up a balance-scale prop, or signs reading FAIRNESS / PEACE / JUSTICE','Project the blue SDG 16 dove-and-gavel icon behind them','Unison line: \u201CA fair world is a peaceful world.\u201D']},
-      slides:[{i:'\u{1F9E5}',l:'Diplomat Robes',t:'Patchwork of kingdoms',p:'Multi-colour panel robes, unity sashes',q:'royal diplomat robe costume patchwork colors'},{i:'\u{1F4DC}',l:'Treaty & Sash',t:'Symbols of unity',p:'Scrolls, linked-ring medallions',q:'peace medallion sash costume prop'},{i:'\u2696\uFE0F',l:'Balance & Signs',t:'Show the message',p:'Scales of justice, FAIRNESS placards',q:'scales of justice prop kids costume'}]},
-    {grp:'up',icon:'\u{1F319}',glow:'rgba(95,230,207,.34)',ring:'rgba(95,230,207,.6)',scene:'linear-gradient(135deg,#10204a,#2a1a55)',grad:true,
+        ideas:['Patchwork robes stitched from many kingdom colours, showing every nation united','Carry a large "Treaty of Peace" scroll the council "signs" mid-performance','Hold up a balance-scale prop, or signs reading FAIRNESS / PEACE / JUSTICE','Project the blue SDG 16 dove-and-gavel icon behind them','Unison line: "A fair world is a peaceful world."']},
+      slides:[{ic:'gavel',l:'Diplomat Robes',t:'Patchwork of kingdoms',p:'Multi-colour panel robes, unity sashes',q:'royal diplomat robe costume patchwork colors'},{ic:'scale',l:'Treaty & Sash',t:'Symbols of unity',p:'Scrolls, linked-ring medallions',q:'peace medallion sash costume prop'},{ic:'scale',l:'Balance & Signs',t:'Show the message',p:'Scales of justice, FAIRNESS placards',q:'scales of justice prop kids costume'}]},
+    {grp:'up',sicon:'moon',cicon:'moon',glow:'rgba(95,230,207,.34)',ring:'rgba(95,230,207,.6)',scene:'linear-gradient(135deg,#10204a,#2a1a55)',grad:true,
       level:'Year 5',title:'Celestial Magic',guardian:'Guardians of the Skies',
       story:'Half ice, half fire — sky guardians who hold the planet in balance. Our graduating cohort carries the most urgent message of all.',
       chars:'Moon guardian, star keeper, sun guardian, crystal mage',
       sdg:{num:'SDG 13',color:'#3f7e44',name:'Climate Action',mean:'Protect the only planet we have — keep our skies and seasons in balance.',
-        ideas:['Half-and-half costumes: icy blue (frost) on one side, warm red (fire) on the other','A \u201Cmelting glacier vs healthy earth\u201D banner, or a globe prop passed hand to hand','Blue and green ribbons that join into one Earth in the final pose','Project the green SDG 13 eye-of-the-storm icon behind them','Unison line: \u201CProtect our planet \u2014 there is no Planet B.\u201D']},
-      slides:[{i:'\u2744\uFE0F',l:'Ice & Fire Split',t:'Half-and-half robe',p:'One side icy blue, one side warm red',q:'ice fire half costume blue red kids'},{i:'\u{1F311}',l:'Celestial Crowns',t:'Moon & stars',p:'Crescent crowns, star motifs',q:'celestial moon star costume headpiece'},{i:'\u{1F30D}',l:'Earth & Banner',t:'Show the message',p:'Globe prop, climate banner, ribbons',q:'earth globe prop climate costume kids'}]},
-    {grp:'up',icon:'\u{1F409}',glow:'rgba(95,230,207,.32)',ring:'rgba(95,230,207,.6)',scene:'linear-gradient(135deg,#13402a,#1a5c3c)',
+        ideas:['Half-and-half costumes: icy blue (frost) on one side, warm red (fire) on the other','A "melting glacier vs healthy earth" banner, or a globe prop passed hand to hand','Blue and green ribbons that join into one Earth in the final pose','Project the green SDG 13 eye-of-the-storm icon behind them','Unison line: "Protect our planet — there is no Planet B."']},
+      slides:[{ic:'moon',l:'Ice & Fire Split',t:'Half-and-half robe',p:'One side icy blue, one side warm red',q:'ice fire half costume blue red kids'},{ic:'star',l:'Celestial Crowns',t:'Moon & stars',p:'Crescent crowns, star motifs',q:'celestial moon star costume headpiece'},{ic:'globe',l:'Earth & Banner',t:'Show the message',p:'Globe prop, climate banner, ribbons',q:'earth globe prop climate costume kids'}]},
+    {grp:'up',sicon:'mountain-snow',cicon:'bird',glow:'rgba(95,230,207,.32)',ring:'rgba(95,230,207,.6)',scene:'linear-gradient(135deg,#13402a,#1a5c3c)',
       level:'Year 6',title:'Legendary Protectors',guardian:'Guardians of Nature',
       story:'Dragon riders and griffin riders who soar above forests and mountains, protecting every creature that lives on the land.',
       chars:'Dragon rider, griffin rider, guardian of the realm, enchanted champion',
       sdg:{num:'SDG 15',color:'#56c02b',name:'Life on Land',mean:'Protect the forests, animals, and wild places — the home of all living things.',
-        ideas:['Wing capes and scaled armour paired with leaf and vine wraps','Carry plush or cut-out animals \u201Crescued\u201D and lifted up at the climax','A \u201Cforest\u201D backdrop that grows greener as the number goes on','Project the green SDG 15 tree-and-birds icon behind them','Unison line: \u201CProtect every creature, protect their home.\u201D']},
-      slides:[{i:'\u{1F409}',l:'Riders',t:'Dragon & griffin riders',p:'Wing capes, scaled armour, vine wraps',q:'dragon rider griffin costume kids wings'},{i:'\u{1F33F}',l:'Nature Guardians',t:'Forest & wild',p:'Leaf textures, carved-animal staffs',q:'forest guardian nature costume staff'},{i:'\u{1F98C}',l:'Animals & Backdrop',t:'Show the message',p:'Rescued-animal props, green forest backdrop',q:'forest animals props stage backdrop kids'}]},
-    {grp:'up',icon:'\u2728',glow:'rgba(242,201,76,.36)',ring:'rgba(242,201,76,.6)',scene:'linear-gradient(135deg,#2e1a5c,#5a3a18)',
+        ideas:['Wing capes and scaled armour paired with leaf and vine wraps','Carry plush or cut-out animals "rescued" and lifted up at the climax','A "forest" backdrop that grows greener as the number goes on','Project the green SDG 15 tree-and-birds icon behind them','Unison line: "Protect every creature, protect their home."']},
+      slides:[{ic:'bird',l:'Riders',t:'Dragon & griffin riders',p:'Wing capes, scaled armour, vine wraps',q:'dragon rider griffin costume kids wings'},{ic:'trees',l:'Nature Guardians',t:'Forest & wild',p:'Leaf textures, carved-animal staffs',q:'forest guardian nature costume staff'},{ic:'leaf',l:'Animals & Backdrop',t:'Show the message',p:'Rescued-animal props, green forest backdrop',q:'forest animals props stage backdrop kids'}]},
+    {grp:'up',sicon:'gem',cicon:'gem',glow:'rgba(242,207,107,.36)',ring:'rgba(242,207,107,.6)',scene:'linear-gradient(135deg,#2e1a5c,#5a3a18)',
       level:'Year 7',title:'The Enchanted Court',guardian:'Guardians of the Future',
       story:'The grandest guardians of all, wearing the colours of every realm before them. They prove that no one protects the world alone.',
       chars:'High king/queen, grand sorcerer, enchantress, celestial guardians',
       sdg:{num:'SDG 17',color:'#19486a',name:'Partnerships for the Goals',mean:'No one protects the world alone — together we can do what none can do apart.',
-        ideas:['The lead \u201CAlliance\u201D robe stitched from a swatch of every other realm\u2019s colours','Gather one guardian from each earlier year on stage for the finale tableau','A giant crystal or globe that lights up as all guardians join hands around it','Project the SDG 17 interlocking-rings icon behind them','Unison line: \u201CTogether, we are the guardians of the future.\u201D']},
-      slides:[{i:'\u{1F451}',l:'High Court',t:'Grandest robes',p:'Gold and deep purple, ceremonial',q:'high king queen royal court costume gold purple'},{i:'\u{1F48E}',l:'Alliance Crystal',t:'Unity prop',p:'Glowing crystal, charms from every guild',q:'crystal staff glowing prop costume'},{i:'\u2728',l:'United Finale',t:'Show the message',p:'Every realm colour, all guardians joined',q:'patchwork rainbow robe unity costume'}]}
+        ideas:['The lead "Alliance" robe stitched from a swatch of every other realm colour','Gather one guardian from each earlier year on stage for the finale tableau','A giant crystal or globe that lights up as all guardians join hands around it','Project the SDG 17 interlocking-rings icon behind them','Unison line: "Together, we are the guardians of the future."']},
+      slides:[{ic:'crown',l:'High Court',t:'Grandest robes',p:'Gold and deep purple, ceremonial',q:'high king queen royal court costume gold purple'},{ic:'gem',l:'Alliance Crystal',t:'Unity prop',p:'Glowing crystal, charms from every guild',q:'crystal staff glowing prop costume'},{ic:'sparkles',l:'United Finale',t:'Show the message',p:'Every realm colour, all guardians joined',q:'patchwork rainbow robe unity costume'}]}
   ];
 
   function sdgPanel(s){
     if(!s)return'';
-    const ideas=s.ideas.map(i=>`<li>${i}</li>`).join('');
+    const ideas=s.ideas.map(i=>`<li>${ic('sparkles')}<span>${i}</span></li>`).join('');
     return `<div class="sdg-panel" style="--sdg-color:${s.color}">
-      <div class="sdg-head"><span class="sdg-num">${s.num}</span><span class="sdg-name">${s.name}</span></div>
+      <div class="sdg-goalchip"><span class="gnum">${s.num.replace('SDG ','')}</span><span class="gmeta"><span class="glabel">UN Global Goal ${s.num.replace('SDG ','')}</span><span class="gname">${s.name}</span></span></div>
       <p class="sdg-mean">${s.mean}</p>
-      <p class="label" style="color:var(--gold);margin-bottom:.35rem">Ways to show it on stage</p>
+      <p class="label" style="color:var(--gold);margin-bottom:.4rem">Ways to show it on stage</p>
       <ul class="sdg-ideas">${ideas}</ul>
     </div>`;
   }
   function buildCard(r){
-    const grad=r.grad?'<span class="badge-grad">Graduates</span>':'';
-    const sdgPill=r.sdg?`<span class="sdg">\u2726 ${r.sdg.num} · ${r.sdg.name.split(' ').slice(0,2).join(' ')}</span>`:'';
-    const slides=r.slides.map(s=>`<div class="slide"><div class="ph-icon">${s.i}</div><span class="ph-label">${s.l}</span><h5>${s.t}</h5><p>${s.p}</p><a class="search-btn" target="_blank" rel="noopener" href="https://www.pinterest.com/search/pins/?q=${encodeURIComponent(s.q)}">Open inspiration gallery →</a></div>`).join('');
+    const grad=r.grad?`<span class="badge-grad">${ic('star')}Graduates</span>`:'';
+    const sdgPill=r.sdg?`<span class="sdg-pill">${ic('globe')} ${r.sdg.num} · ${r.sdg.name.split(' ').slice(0,2).join(' ')}</span>`:'';
+    const slides=r.slides.map(s=>`<div class="slide"><div class="ph-icon">${svgIcon(s.ic)}</div><span class="ph-label">${s.l}</span><h5>${s.t}</h5><p>${s.p}</p><a class="search-btn" target="_blank" rel="noopener" href="https://www.pinterest.com/search/pins/?q=${encodeURIComponent(s.q)}">Open inspiration gallery ${ic('chevron-right')}</a></div>`).join('');
     const dots=r.slides.map((_,i)=>`<button data-i="${i}" class="${i===0?'active':''}" aria-label="Slide ${i+1}"></button>`).join('');
     const cvine='<svg class="cvine t" viewBox="0 0 120 120" aria-hidden="true"><path d="M2 2 C2 40 6 70 26 90 C44 108 74 112 110 114"/><path d="M2 2 C40 4 70 8 90 28 C108 46 112 76 114 110"/><ellipse class="lf" cx="30" cy="16" rx="7" ry="3" transform="rotate(35 30 16)"/><ellipse class="lf" cx="16" cy="30" rx="7" ry="3" transform="rotate(-55 16 30)"/></svg>'+
                 '<svg class="cvine b" viewBox="0 0 120 120" aria-hidden="true"><path d="M2 2 C2 40 6 70 26 90 C44 108 74 112 110 114"/><path d="M2 2 C40 4 70 8 90 28 C108 46 112 76 114 110"/><ellipse class="lf" cx="30" cy="16" rx="7" ry="3" transform="rotate(35 30 16)"/><ellipse class="lf" cx="16" cy="30" rx="7" ry="3" transform="rotate(-55 16 30)"/></svg>';
     return `<div class="card reveal" style="--card-glow:${r.glow};--card-ring:${r.ring}">
       ${cvine}
-      <div class="scene" style="--scene-bg:${r.scene}"><span class="scene-emoji">${r.icon}</span></div>
+      <div class="scene" style="--scene-bg:${r.scene}">${sceneFor(r.title)}<div class="scene-vignette"></div><span class="scene-icon">${svgIcon(r.sicon)}</span></div>
       <div class="grid2">
         <div class="info">
           <p class="level">${r.level} ${grad}</p>
@@ -406,9 +530,9 @@
           ${sdgPanel(r.sdg)}
         </div>
         <div class="carousel" data-idx="0">
-          <button class="car-btn prev" aria-label="Previous">‹</button>
+          <button class="car-btn prev" aria-label="Previous">${ic('chevron-left')}</button>
           <div class="track">${slides}</div>
-          <button class="car-btn next" aria-label="Next">›</button>
+          <button class="car-btn next" aria-label="Next">${ic('chevron-right')}</button>
           <div class="dots">${dots}</div>
         </div>
       </div>
@@ -427,69 +551,70 @@
     if(!matchMedia('(prefers-reduced-motion:reduce)').matches)auto();
   });
 
-  // starfield
+  // ===== MUSIC (YouTube IFrame API) =====
   (function(){
-    const c=document.getElementById('stars'),x=c.getContext('2d');let w,h,stars=[],reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-    function size(){w=c.width=innerWidth;h=c.height=Math.max(document.body.scrollHeight,innerHeight);init();}
-    function init(){const n=Math.min(240,Math.floor(w*h/10000));stars=[];for(let i=0;i<n;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.3,a:Math.random(),sp:Math.random()*.025+.005,col:Math.random()<.2?'196,169,255':Math.random()<.35?'95,230,207':Math.random()<.5?'255,158,196':'255,233,168'});}
-    function draw(){if(!stars.length)return;x.clearRect(0,0,w,h);for(const s of stars){if(!reduce){s.a+=s.sp;if(s.a>1||s.a<0)s.sp*=-1;}const al=reduce?.5:Math.abs(s.a);x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fillStyle='rgba('+s.col+','+al+')';x.shadowBlur=5;x.shadowColor='rgba('+s.col+',.9)';x.fill();}x.shadowBlur=0;if(!reduce)requestAnimationFrame(draw);}
-    addEventListener('resize',()=>{clearTimeout(window._rt);window._rt=setTimeout(size,250)});
-    size();draw();setTimeout(size,500);window.addEventListener('load',()=>setTimeout(size,300));
+    const fab=document.getElementById('musicFab'),mtext=document.getElementById('mtext'),hint=document.getElementById('musicHint');
+    let player=null,ready=false,playing=false;
+    const tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);
+    window.onYouTubeIframeAPIReady=function(){
+      player=new YT.Player('yt-holder',{height:'1',width:'1',videoId:'a62FG17wIz0',
+        playerVars:{autoplay:0,controls:0,loop:1,playlist:'a62FG17wIz0',modestbranding:1},
+        events:{onReady:()=>{ready=true;},onStateChange:(e)=>{
+          if(e.data===YT.PlayerState.PLAYING){playing=true;fab.classList.add('playing');mtext.textContent='Pause music';}
+          else if(e.data===YT.PlayerState.PAUSED||e.data===YT.PlayerState.ENDED){playing=false;fab.classList.remove('playing');mtext.textContent='Play music';}
+        }}});
+    };
+    fab.addEventListener('click',()=>{
+      if(hint)hint.style.display='none';
+      if(!ready||!player){return;}
+      if(playing){player.pauseVideo();}else{player.setVolume(45);player.playVideo();}
+    });
   })();
 
-  // glitter sparkles
+  // ===== STARFIELD =====
+  (function(){
+    const c=document.getElementById('stars'),x=c.getContext('2d');let w,h,stars=[],reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+    function size(){w=c.width=innerWidth;h=c.height=innerHeight;init();}
+    function init(){const n=Math.min(300,Math.floor(w*h/5200));stars=[];for(let i=0;i<n;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.6+.3,a:Math.random(),sp:Math.random()*.03+.006,col:Math.random()<.22?'196,169,255':Math.random()<.4?'95,230,207':Math.random()<.55?'255,226,140':'255,158,196'});}
+    function draw(){if(!stars.length)return;x.clearRect(0,0,w,h);for(const s of stars){if(!reduce){s.a+=s.sp;if(s.a>1||s.a<0)s.sp*=-1;}const al=reduce?.5:Math.abs(s.a);x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fillStyle='rgba('+s.col+','+al+')';x.shadowBlur=6;x.shadowColor='rgba('+s.col+',.9)';x.fill();}x.shadowBlur=0;if(!reduce)requestAnimationFrame(draw);}
+    addEventListener('resize',()=>{clearTimeout(window._rt);window._rt=setTimeout(size,250)});
+    size();draw();
+  })();
+
+  // ===== GLITTER SPARKLES =====
   (function(){
     if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
     const c=document.getElementById('sparkles'),x=c.getContext('2d');let w,h,sp=[];
     function size(){w=c.width=innerWidth;h=c.height=innerHeight;init();}
-    function init(){const n=Math.min(50,Math.floor(w/26));sp=[];for(let i=0;i<n;i++)sp.push(mk(Math.random()*h));}
-    function mk(y){return{x:Math.random()*w,y:y!==undefined?y:h+10,r:Math.random()*2.4+.8,vy:Math.random()*.55+.22,vx:(Math.random()-.5)*.5,a:Math.random()*.6+.3,tw:Math.random()*.05+.02,ph:Math.random()*6,col:Math.random()<.4?'255,233,168':Math.random()<.5?'196,169,255':Math.random()<.6?'95,230,207':'255,158,196'};}
+    function init(){const n=Math.min(70,Math.floor(w/20));sp=[];for(let i=0;i<n;i++)sp.push(mk(Math.random()*h));}
+    function mk(y){return{x:Math.random()*w,y:y!==undefined?y:h+10,r:Math.random()*2.6+.9,vy:Math.random()*.55+.22,vx:(Math.random()-.5)*.5,a:Math.random()*.6+.3,tw:Math.random()*.05+.02,ph:Math.random()*6,col:Math.random()<.4?'255,226,140':Math.random()<.5?'196,169,255':Math.random()<.6?'95,230,207':'255,158,196'};}
     function star(cx,cy,r,col,al){x.save();x.translate(cx,cy);x.beginPath();for(let i=0;i<4;i++){x.rotate(Math.PI/2);x.moveTo(0,0);x.quadraticCurveTo(r*.25,r*.25,0,r);x.quadraticCurveTo(-r*.25,r*.25,0,0);}x.fillStyle='rgba('+col+','+al+')';x.shadowBlur=8;x.shadowColor='rgba('+col+',.9)';x.fill();x.restore();}
     function draw(){x.clearRect(0,0,w,h);for(let i=0;i<sp.length;i++){const m=sp[i];m.y-=m.vy;m.x+=m.vx;m.ph+=m.tw;const al=m.a*(0.5+0.5*Math.sin(m.ph));if(m.y<-12)sp[i]=mk();star(m.x,m.y,m.r,m.col,Math.max(0,al));}x.shadowBlur=0;requestAnimationFrame(draw);}
     addEventListener('resize',()=>{clearTimeout(window._st);window._st=setTimeout(size,250)});
     size();draw();
   })();
 
-  // FIREFLIES — slow wandering glowing orbs with soft trails
+  // ===== FIREFLIES =====
   (function(){
     if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
     const c=document.getElementById('fireflies'),x=c.getContext('2d');let w,h,ff=[];
     function size(){w=c.width=innerWidth;h=c.height=innerHeight;init();}
-    function init(){const n=Math.min(22,Math.floor(w/60));ff=[];for(let i=0;i<n;i++)ff.push(mk());}
-    function mk(){return{x:Math.random()*w,y:Math.random()*h,r:Math.random()*2.4+1.6,ang:Math.random()*6.28,sp:Math.random()*.4+.18,turn:(Math.random()-.5)*.05,ph:Math.random()*6,pr:Math.random()*.03+.015,col:Math.random()<.55?'255,226,140':Math.random()<.5?'150,255,190':'196,169,255'};}
-    function draw(){
-      x.clearRect(0,0,w,h);
-      for(const f of ff){
-        f.ang+=f.turn+(Math.random()-.5)*.08;f.x+=Math.cos(f.ang)*f.sp;f.y+=Math.sin(f.ang)*f.sp;f.ph+=f.pr;
-        if(f.x<-20)f.x=w+20;if(f.x>w+20)f.x=-20;if(f.y<-20)f.y=h+20;if(f.y>h+20)f.y=-20;
-        const glow=0.45+0.55*Math.sin(f.ph);
-        const g=x.createRadialGradient(f.x,f.y,0,f.x,f.y,f.r*7);
-        g.addColorStop(0,'rgba('+f.col+','+(0.55*glow)+')');g.addColorStop(1,'rgba('+f.col+',0)');
-        x.fillStyle=g;x.beginPath();x.arc(f.x,f.y,f.r*7,0,7);x.fill();
-        x.beginPath();x.arc(f.x,f.y,f.r,0,7);x.fillStyle='rgba('+f.col+','+glow+')';x.shadowBlur=12;x.shadowColor='rgba('+f.col+',.9)';x.fill();x.shadowBlur=0;
-      }
-      requestAnimationFrame(draw);
-    }
+    function init(){const n=Math.min(30,Math.floor(w/46));ff=[];for(let i=0;i<n;i++)ff.push(mk());}
+    function mk(){return{x:Math.random()*w,y:Math.random()*h,r:Math.random()*2.6+1.6,ang:Math.random()*6.28,sp:Math.random()*.45+.18,turn:(Math.random()-.5)*.05,ph:Math.random()*6,pr:Math.random()*.03+.015,col:Math.random()<.6?'255,219,120':Math.random()<.5?'150,255,190':'196,169,255'};}
+    function draw(){x.clearRect(0,0,w,h);for(const f of ff){f.ang+=f.turn+(Math.random()-.5)*.08;f.x+=Math.cos(f.ang)*f.sp;f.y+=Math.sin(f.ang)*f.sp;f.ph+=f.pr;if(f.x<-20)f.x=w+20;if(f.x>w+20)f.x=-20;if(f.y<-20)f.y=h+20;if(f.y>h+20)f.y=-20;const glow=0.45+0.55*Math.sin(f.ph);const g=x.createRadialGradient(f.x,f.y,0,f.x,f.y,f.r*8);g.addColorStop(0,'rgba('+f.col+','+(0.6*glow)+')');g.addColorStop(1,'rgba('+f.col+',0)');x.fillStyle=g;x.beginPath();x.arc(f.x,f.y,f.r*8,0,7);x.fill();x.beginPath();x.arc(f.x,f.y,f.r,0,7);x.fillStyle='rgba('+f.col+','+glow+')';x.shadowBlur=14;x.shadowColor='rgba('+f.col+',.9)';x.fill();x.shadowBlur=0;}requestAnimationFrame(draw);}
     addEventListener('resize',()=>{clearTimeout(window._ft);window._ft=setTimeout(size,250)});
     size();draw();
   })();
 
-  // cursor magic-dust trail
+  // ===== CURSOR TRAIL =====
   (function(){
     if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
     if(matchMedia('(pointer:coarse)').matches)return;
     let last=0;const cols=['#ffe9a8','#c4a9ff','#5fe6cf','#ff9ec4'];
-    addEventListener('mousemove',e=>{
-      const now=Date.now();if(now-last<40)return;last=now;
-      const d=document.createElement('div');const sz=Math.random()*6+3;
-      d.style.cssText=`position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:${sz}px;height:${sz}px;border-radius:50%;pointer-events:none;z-index:9999;background:${cols[Math.floor(Math.random()*cols.length)]};box-shadow:0 0 8px currentColor;transition:transform .8s ease,opacity .8s ease;opacity:.9`;
-      document.body.appendChild(d);
-      requestAnimationFrame(()=>{d.style.transform=`translateY(${Math.random()*30+10}px) scale(0)`;d.style.opacity='0';});
-      setTimeout(()=>d.remove(),850);
-    });
+    addEventListener('mousemove',e=>{const now=Date.now();if(now-last<38)return;last=now;const d=document.createElement('div');const sz=Math.random()*6+3;d.style.cssText=`position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:${sz}px;height:${sz}px;border-radius:50%;pointer-events:none;z-index:9999;background:${cols[Math.floor(Math.random()*cols.length)]};box-shadow:0 0 8px currentColor;transition:transform .8s ease,opacity .8s ease;opacity:.9`;document.body.appendChild(d);requestAnimationFrame(()=>{d.style.transform=`translateY(${Math.random()*30+10}px) scale(0)`;d.style.opacity='0';});setTimeout(()=>d.remove(),850);});
   })();
 
-  // reveal
+  // ===== REVEAL =====
   (function(){
     const els=document.querySelectorAll('.reveal');
     if(!('IntersectionObserver'in window)){els.forEach(e=>e.classList.add('in'));return;}
@@ -498,5 +623,4 @@
     setTimeout(()=>els.forEach(e=>e.classList.add('in')),4500);
   })();
 </script>
-</body>
-</html>
+</body></html>
