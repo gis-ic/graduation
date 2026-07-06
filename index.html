@@ -16,6 +16,8 @@
     --teal:#5fe6cf;--violet:#c4a9ff;--rose:#ff9ec4;
     --parchment:#f4efe0;--mist:rgba(244,239,224,.82);--mist-dim:rgba(244,239,224,.55);
     --hair:rgba(242,207,107,.3);
+    --irid:linear-gradient(115deg,#ffe9a8 0%,#a8f0d0 20%,#b8c4ff 38%,#ffc4e6 55%,#fff0c4 72%,#9be8d0 88%,#ffe9a8 100%);
+    --irid-soft:linear-gradient(115deg,rgba(255,233,168,.9),rgba(168,240,208,.85),rgba(184,196,255,.85),rgba(255,196,230,.85),rgba(255,240,196,.9));
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -33,10 +35,15 @@
   .aurora.a1{background:radial-gradient(40% 30% at 28% 18%, rgba(108,194,138,.6), transparent 70%);animation:drift1 24s ease-in-out infinite alternate}
   .aurora.a2{background:radial-gradient(45% 32% at 72% 35%, rgba(95,230,207,.5), transparent 70%);animation:drift2 30s ease-in-out infinite alternate}
   .aurora.a3{background:radial-gradient(42% 30% at 50% 75%, rgba(242,207,107,.45), transparent 70%);animation:drift3 26s ease-in-out infinite alternate}
+  /* iridescent oil-slick wash — very subtle, slowly rotating rainbow */
+  .irid-aura{position:absolute;inset:-30%;pointer-events:none;mix-blend-mode:screen;opacity:.10;filter:blur(90px);
+    background:conic-gradient(from 0deg at 50% 50%, rgba(255,233,168,.6), rgba(168,240,208,.6), rgba(184,196,255,.6), rgba(255,196,230,.6), rgba(159,232,208,.6), rgba(255,233,168,.6));
+    animation:iridSpin 40s linear infinite}
+  @keyframes iridSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
   @keyframes drift1{from{transform:translate(-5%,-4%) scale(1)}to{transform:translate(7%,5%) scale(1.18)}}
   @keyframes drift2{from{transform:translate(6%,3%) scale(1.12)}to{transform:translate(-7%,-5%) scale(1)}}
   @keyframes drift3{from{transform:translate(-4%,5%) scale(1)}to{transform:translate(5%,-6%) scale(1.22)}}
-  @media (prefers-reduced-motion:reduce){.bg-forest{animation:none}}
+  @media (prefers-reduced-motion:reduce){.bg-forest{animation:none}.irid-aura{animation:none}}
   #stars,#sparkles,#fireflies{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
   @media (prefers-reduced-motion:reduce){.aurora{animation:none}}
 
@@ -46,7 +53,7 @@
   .icon{display:inline-block;vertical-align:middle}
   .icon svg, .scene-icon svg, .ph-icon svg, .car-btn svg, .ac-icon svg, .music-fab svg{display:block;width:100%;height:100%;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
 
-  .shimmer-text{background:linear-gradient(100deg,var(--gold-deep) 0%,var(--gold) 25%,var(--gold-bright) 45%,#fff7e0 50%,var(--gold-bright) 55%,var(--gold) 75%,var(--gold-deep) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmerflow 6s linear infinite;filter:drop-shadow(0 2px 30px rgba(242,207,107,.4))}
+  .shimmer-text{background:linear-gradient(100deg,var(--gold-deep) 0%,var(--gold) 18%,var(--gold-bright) 34%,#eafff4 44%,#fff7e0 50%,#f0f0ff 56%,var(--gold-bright) 66%,var(--gold) 82%,var(--gold-deep) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmerflow 6s linear infinite;filter:drop-shadow(0 2px 30px rgba(242,207,107,.4))}
   @keyframes shimmerflow{0%{background-position:200% 0}100%{background-position:-200% 0}}
   @media (prefers-reduced-motion:reduce){.shimmer-text{animation:none}}
 
@@ -125,8 +132,13 @@
 
   /* ===== REALM CARD ===== */
   .card{max-width:960px;margin:0 auto 2.8rem;background:rgba(8,24,17,.62);border:1px solid var(--hair);border-radius:22px;overflow:hidden;box-shadow:0 0 40px rgba(0,0,0,.4),0 0 34px var(--card-glow,rgba(242,207,107,.1));backdrop-filter:blur(6px);position:relative;transition:transform .45s cubic-bezier(.34,1.3,.64,1),box-shadow .45s}
-  .card::before{content:"";position:absolute;inset:0;border-radius:22px;padding:1px;pointer-events:none;background:linear-gradient(130deg,transparent 30%,var(--card-ring,rgba(242,207,107,.5)) 50%,transparent 70%);background-size:300% 300%;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s;animation:borderFlow 5s linear infinite;z-index:6}
+  .card::before{content:"";position:absolute;inset:0;border-radius:22px;padding:1px;pointer-events:none;background:linear-gradient(130deg,transparent 22%,rgba(255,233,168,.7) 40%,rgba(168,240,208,.7) 50%,rgba(184,196,255,.7) 60%,rgba(255,196,230,.6) 70%,transparent 82%);background-size:300% 300%;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s;animation:borderFlow 5s linear infinite, iridHue 8s linear infinite;z-index:6}
   @keyframes borderFlow{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  @keyframes iridHue{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(360deg)}}
+  /* holographic sheen that sweeps across a card on hover */
+  .card::after{content:"";position:absolute;inset:0;border-radius:22px;pointer-events:none;z-index:5;opacity:0;background:linear-gradient(115deg,transparent 30%,rgba(255,233,168,.14) 42%,rgba(168,240,208,.16) 50%,rgba(184,196,255,.16) 58%,rgba(255,196,230,.12) 66%,transparent 78%);background-size:250% 250%;background-position:200% 0;transition:opacity .5s;mix-blend-mode:screen}
+  .card:hover::after{opacity:1;animation:holoSweep 1.6s ease forwards}
+  @keyframes holoSweep{0%{background-position:200% 0}100%{background-position:-60% 0}}
   .card:hover{transform:translateY(-8px) scale(1.012);box-shadow:0 14px 60px rgba(0,0,0,.55),0 0 60px var(--card-glow,rgba(242,207,107,.32))}
   .card:hover::before{opacity:1}
   .card .cvine{position:absolute;width:120px;height:120px;pointer-events:none;z-index:5;opacity:.5}
@@ -154,7 +166,11 @@
   .card .info{padding:1.8rem 2rem 2rem;position:relative;z-index:3}
   .card .level{font-family:'Outfit',sans-serif;font-weight:600;letter-spacing:.2em;text-transform:uppercase;font-size:.66rem;color:var(--gold)}
   .card h4{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(1.3rem,3vw,1.7rem);color:var(--parchment);margin:.3rem 0 .15rem;line-height:1.12}
-  .card .guardian{font-style:italic;font-size:1.18rem;color:var(--gold-bright);margin-bottom:.5rem;text-shadow:0 0 14px rgba(242,207,107,.25)}
+  .card .guardian{font-style:italic;font-size:1.18rem;margin-bottom:.5rem;
+    background:var(--irid);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 12px rgba(184,196,255,.3));animation:iridFlow 7s linear infinite}
+  @keyframes iridFlow{0%{background-position:0% 0}100%{background-position:220% 0}}
+  @media (prefers-reduced-motion:reduce){.card .guardian{animation:none}}
   .card .story{color:var(--mist);font-size:1.04rem;margin-bottom:.7rem;line-height:1.5}
   .card .chars{color:var(--mist-dim);font-size:.98rem;margin-bottom:.7rem}
   .card .chars b{color:var(--mist);font-weight:600;font-style:normal}
@@ -186,7 +202,7 @@
   .slide p{font-size:.98rem;color:var(--mist);max-width:30ch}
   .slide .search-btn{margin-top:.3rem;display:inline-flex;align-items:center;gap:.45rem;font-family:'Outfit',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;color:var(--ink);background:linear-gradient(180deg,var(--gold-bright),var(--gold));padding:.6rem 1.1rem;border-radius:999px;text-decoration:none;box-shadow:0 0 18px rgba(242,207,107,.45);transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .25s;position:relative;overflow:hidden}
   .slide .search-btn .icon{width:14px;height:14px;color:var(--ink)}
-  .slide .search-btn::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transition:left .6s}
+  .slide .search-btn::after{content:"";position:absolute;top:0;left:-120%;width:70%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),rgba(168,240,208,.4),rgba(184,196,255,.4),rgba(255,196,230,.35),transparent);transition:left .6s}
   .slide .search-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 0 30px rgba(242,207,107,.7)}
   .slide .search-btn:hover::after{left:130%}
   .car-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:38px;height:38px;border-radius:50%;border:1px solid var(--hair);background:rgba(6,18,13,.75);color:var(--gold-bright);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .25s,transform .2s,box-shadow .25s}
@@ -329,6 +345,20 @@
   @media (prefers-reduced-motion:reduce){#cover .cover-bg,#cover .cover-inner,#cover .crest,#cover .open-btn{animation:none}}
   .reveal.in{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+  /* ===== IRIDESCENT ACCENTS ===== */
+  #cover .open-btn{position:relative;overflow:hidden}
+  #cover .open-btn::after{content:"";position:absolute;inset:0;background:var(--irid-soft);background-size:250% 100%;opacity:.35;mix-blend-mode:screen;animation:iridFlow 5s linear infinite;pointer-events:none}
+  .music-fab{position:relative;overflow:hidden}
+  .music-fab::after{content:"";position:absolute;inset:0;border-radius:999px;background:var(--irid-soft);background-size:250% 100%;opacity:0;mix-blend-mode:screen;transition:opacity .4s;animation:iridFlow 6s linear infinite;pointer-events:none}
+  .music-fab:hover::after{opacity:.3}
+  /* iridescent sheen gliding over the swatch chips */
+  .swatch .chip{position:relative;overflow:hidden}
+  .swatch .chip::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);background-size:250% 250%;background-position:200% 0;animation:holoSweep 4s ease-in-out infinite;mix-blend-mode:screen}
+  /* iridescent edge on the SDG goal number */
+  .sdg-goalchip .gnum{position:relative;overflow:hidden}
+  .sdg-goalchip .gnum::after{content:"";position:absolute;inset:0;background:var(--irid-soft);background-size:250% 100%;opacity:.28;mix-blend-mode:screen;animation:iridFlow 6s linear infinite}
+  @media (prefers-reduced-motion:reduce){#cover .open-btn::after,.music-fab::after,.swatch .chip::after,.sdg-goalchip .gnum::after{animation:none}}
+
   /* ===== COMPREHENSIVE MOBILE ===== */
   @media(max-width:760px){
     body{font-size:18px}
@@ -396,7 +426,7 @@
 <div class="bg-layer" aria-hidden="true">
   <div class="bg-forest"></div>
   <div class="bg-tint"></div>
-  <div class="aurora a1"></div><div class="aurora a2"></div><div class="aurora a3"></div>
+  <div class="aurora a1"></div><div class="aurora a2"></div><div class="aurora a3"></div><div class="irid-aura"></div>
 </div>
 <canvas id="stars" aria-hidden="true"></canvas>
 <canvas id="sparkles" aria-hidden="true"></canvas>
@@ -538,12 +568,11 @@
       <p class="eyebrow">The Music</p>
       <div class="flourish" aria-hidden="true"><span class="icon" data-ic="music"></span></div>
       <h2 class="shimmer-text">Ceremony Songs</h2>
-      <p>The three confirmed songs. Press play to preview.</p>
+      <p>The two confirmed songs. Press play to preview.</p>
     </div>
     <div class="music-grid reveal">
       <div class="music-card"><div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/fBtyX00H8SU" title="Today My Life Begins" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="cap"><p class="role">Graduation Song</p><h4>Today My Life Begins</h4><p class="artist">Bruno Mars</p></div></div>
       <div class="music-card"><div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/hxLDnw9DJKI" title="Thanks to You" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="cap"><p class="role">Tribute to Parents</p><h4>Thanks to You</h4><p class="artist">Tyler Collins</p></div></div>
-      <div class="music-card"><div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/6k8cpUkKK4c" title="Count on Me" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="cap"><p class="role">Teachers' Tribute (Finale)</p><h4>Count on Me</h4><p class="artist">Bruno Mars</p></div></div>
     </div>
     <p class="note reveal">Each homeroom teacher plans the music concept for their own level's performance, choosing a song that fits their realm and guardian theme. Once a level's song is set, its realm card can carry that track here too.</p>
   </section>
@@ -552,7 +581,7 @@
     <div class="sec-head reveal">
       <p class="eyebrow">Order of the Day</p>
       <h2 class="shimmer-text">Saturday, 22 August 2026</h2>
-      <p><a href="https://www.booking.com/hotel/la/muong-thanh-luxury-vientiane.vi.html" target="_blank" rel="noopener" style="color:var(--gold-bright);text-decoration:none;border-bottom:1px solid var(--hair)">Muong Thanh Luxury Vientiane Hotel</a> &middot; 3rd Floor, Luang Prabang Hall. A half-day celebration — graduation first, then the presentation. Presentation segments are timed at 6.5-minute slots (about 5 minutes of performance plus entrance and exit) to finish safely by 11:45.</p>
+      <p><a href="https://www.booking.com/hotel/la/muong-thanh-luxury-vientiane.vi.html" target="_blank" rel="noopener" style="color:var(--gold-bright);text-decoration:none;border-bottom:1px solid var(--hair)">Muong Thanh Luxury Vientiane Hotel</a> &middot; 3rd Floor, Luang Prabang Hall. A half-day celebration — graduation first, then the presentation. Presentation segments are timed at 6.5-minute slots (about 5 minutes of performance plus entrance and exit) to finish by around 11:40.</p>
     </div>
     <div class="ros-inner reveal">
       <p class="ros-group">Graduation Ceremony</p>
@@ -560,7 +589,7 @@
       <div class="slot"><div class="time">8:00 – 8:30</div><div class="what">Academic Procession</div></div>
       <div class="slot"><div class="time">8:30 – 8:45</div><div class="what">Opening Remarks<span>Mrs. Viengkhong Luanglath — Head of Lao Early Years Curriculum</span></div></div>
       <div class="slot"><div class="time">8:45 – 9:45</div><div class="what">Giving of Certificates &amp; Achievements<span>Medals &amp; certificates — Kinder 3 &amp; Year 5 graduates</span></div></div>
-      <div class="slot"><div class="time">9:45 – 10:00</div><div class="what">Graduation Speech<span>Two highest-honours students (TBA)</span></div></div>
+      <div class="slot"><div class="time">9:45 – 10:00</div><div class="what">Graduation Speech<span>One highest-honours student (TBA)</span></div></div>
       <div class="slot"><div class="time">10:00 – 10:05</div><div class="what">Graduation Song<span>Today My Life Begins — Bruno Mars</span></div></div>
       <div class="slot"><div class="time">10:05 – 10:15</div><div class="what">Tribute to Parents<span>Thanks to You — Tyler Collins</span></div></div>
       <p class="ros-group">End-of-Year Presentation &middot; 6.5-min slots</p>
@@ -576,10 +605,9 @@
       <div class="slot"><div class="time">11:13 – 11:20</div><div class="what">Year 5 · Celestial Magic <span class="star-ic icon" data-ic="star"></span><span>Guardians of the Skies — SDG 13</span></div></div>
       <div class="slot"><div class="time">11:20 – 11:26</div><div class="what">Year 6 · Legendary Protectors<span>Guardians of Nature — SDG 15</span></div></div>
       <div class="slot"><div class="time">11:26 – 11:33</div><div class="what">Year 7 · The Enchanted Court<span>Guardians of the Future — SDG 17</span></div></div>
-      <div class="slot"><div class="time">11:33 – 11:39</div><div class="what">Foreign Teachers — Finale<span>Count on Me — Bruno Mars · all guardians united</span></div></div>
-      <div class="slot"><div class="time">11:39 – 11:45</div><div class="what">Closing &amp; Group Photo<span>Buffer + the closing image</span></div></div>
+      <div class="slot"><div class="time">11:33 – 11:40</div><div class="what">Closing &amp; Group Photo<span>The closing image — all our guardians together</span></div></div>
     </div>
-    <p class="note reveal">The schedule ends at 11:39, leaving about 6 minutes of breathing room before 11:45. Please keep each performance to 5 minutes so the day stays on time.</p>
+    <p class="note reveal">The presentation ends at around 11:40. Please keep each performance to 5 minutes so the day stays on time.</p>
   </section>
 
   <footer>
@@ -681,65 +709,65 @@ const ICONS={"trees": "<path d=\"M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10
       level:'Pre-Kindergarten',title:'Woodland Friends',guardian:'Guardians of the Forest',
       story:'A soft, sun-dappled forest where the smallest creatures look after every leaf, flower, and friend. Gentle, cuddly, and full of wonder.',
       chars:'Bunny, deer, fox, squirrel, owl, butterfly, bee, ladybug',
-      slides:[{ic:'rabbit',l:'Animal Ears & Tails',t:'Soft woodland creatures',p:'Headbands with ears, face paint, fuzzy tails',q:'kids woodland animal costume ears tail DIY'},{ic:'leaf',l:'Forest Colours',t:'Earthy palette',p:'Browns, greens, soft autumn tones',q:'children forest animal group costume brown green'},{ic:'bug',l:'Bee & Ladybug',t:'Little bugs',p:'Striped and spotted simple costumes',q:'toddler bee ladybug costume simple'}]},
+      slides:[{ic:'rabbit',l:'Animal Ears & Tails',t:'Soft woodland creatures',p:'Headbands with ears, face paint, fuzzy tails',q:'kids woodland animal costume ears tail DIY'},{ic:'leaf',l:'Forest Colours',t:'Earthy palette',p:'Browns, greens, soft autumn tones',q:'children forest animal group costume brown green'},{ic:'bug',l:'Bee & Ladybug',t:'Little bugs',p:'Striped and spotted simple costumes',q:'toddler bee ladybug costume simple'},{ic:'venetian-mask',l:'Animal Face Paint',t:'Sweet & simple',p:'Little noses, whiskers, soft cheeks',q:'toddler animal face paint simple woodland'},{ic:'trees',l:'Woodland Set',t:'Forest backdrop',p:'Toadstools, ferns, friendly trees',q:'woodland forest stage backdrop kids school'}]},
     {grp:'ey',sicon:'flower-2',cicon:'flower-2',glow:'rgba(255,158,196,.32)',ring:'rgba(255,158,196,.6)',scene:'linear-gradient(135deg,#3a1f4a,#6a3a78)',
       level:'Kindergarten 1',title:'Fairies & Pixies',guardian:'Guardians of the Garden',
       story:'A glittering garden at twilight, where tiny winged folk keep the flowers blooming and the dewdrops shining. Sparkle, pastels, and flutter.',
       chars:'Flower fairy, butterfly fairy, pixie, fairy prince, fairy princess',
-      slides:[{ic:'feather',l:'Wings',t:'Fairy & butterfly wings',p:'Glitter wings, antennae, tutus',q:'kids fairy pixie costume wings DIY'},{ic:'flower-2',l:'Flower Crowns',t:'Garden headpieces',p:'Floral crowns and petal skirts',q:'flower fairy crown costume children'},{ic:'sparkles',l:'Pastel Magic',t:'Soft shimmer',p:'Pastels, sparkle, light fabrics',q:'pixie fairy pastel costume kids'}]},
+      slides:[{ic:'feather',l:'Wings',t:'Fairy & butterfly wings',p:'Glitter wings, antennae, tutus',q:'kids fairy pixie costume wings DIY'},{ic:'flower-2',l:'Flower Crowns',t:'Garden headpieces',p:'Floral crowns and petal skirts',q:'flower fairy crown costume children'},{ic:'sparkles',l:'Pastel Magic',t:'Soft shimmer',p:'Pastels, sparkle, light fabrics',q:'pixie fairy pastel costume kids'},{ic:'wand-2',l:'Wands & Dust',t:'Little magic props',p:'Star wands, glitter, ribbon streamers',q:'fairy wand glitter prop kids DIY'},{ic:'flower-2',l:'Garden Set',t:'Bloom backdrop',p:'Giant flowers, vines, butterflies',q:'fairy garden stage backdrop flowers school'}]},
     {grp:'ey',sicon:'crown',cicon:'crown',glow:'rgba(242,207,107,.34)',ring:'rgba(242,207,107,.6)',scene:'linear-gradient(135deg,#5a3210,#9a6a1a)',
       level:'Kindergarten 2',title:'Royal Kingdom',guardian:'Guardians of the Kingdom',
       story:'A bright storybook castle where kind young royals watch over their land. Crowns, capes, and bold fairytale colour.',
       chars:'Prince, princess, king, queen, royal guard',
-      slides:[{ic:'crown',l:'Crowns & Capes',t:'Storybook royalty',p:'Bright capes, crowns, sashes',q:'kids prince princess costume crown cape'},{ic:'shield',l:'Royal Guard',t:'Palace guards',p:'Tabards and toy swords',q:'child royal guard costume tabard'},{ic:'castle',l:'Bright & Bold',t:'Primary colours',p:'Red, blue, gold — Disney-bright',q:'storybook king queen costume children bright'}]},
+      slides:[{ic:'crown',l:'Crowns & Capes',t:'Storybook royalty',p:'Bright capes, crowns, sashes',q:'kids prince princess costume crown cape'},{ic:'shield',l:'Royal Guard',t:'Palace guards',p:'Tabards and toy swords',q:'child royal guard costume tabard'},{ic:'castle',l:'Bright & Bold',t:'Primary colours',p:'Red, blue, gold — Disney-bright',q:'storybook king queen costume children bright'},{ic:'gem',l:'Royal Jewels',t:'Crowns & sceptres',p:'Jewelled crowns, medallions, sceptres',q:'kids royal crown jewels sceptre prop'},{ic:'castle',l:'Throne Room',t:'Castle backdrop',p:'Banners, thrones, castle arches',q:'castle throne room stage backdrop school'}]},
     {grp:'ey',sicon:'wand-2',cicon:'wand-2',glow:'rgba(196,169,255,.34)',ring:'rgba(196,169,255,.6)',scene:'linear-gradient(135deg,#1c1145,#3d2480)',grad:true,
       level:'Kindergarten 3',title:'Wizards & Magic',guardian:'Guardians of Wonder',
       story:'A starlit tower of spells and friendly magic, where our littlest graduates keep wonder alive. Midnight blue, purple, and gold stars.',
       chars:'Wizard, friendly witch, sorcerer, magician, magic apprentice',
-      slides:[{ic:'wand-2',l:'Wizard Robes',t:'Starry robes & hats',p:'Pointed hats, star-patterned capes',q:'kids wizard costume robe hat stars'},{ic:'sparkles',l:'Wands & Staffs',t:'Magic props',p:'Glittery wands, glowing staffs',q:'child wizard wand staff prop DIY'},{ic:'moon',l:'Friendly Magic',t:'Warm & whimsical',p:'Purple, midnight blue, gold stars',q:'friendly wizard sorcerer costume kids purple'}]},
+      slides:[{ic:'wand-2',l:'Wizard Robes',t:'Starry robes & hats',p:'Pointed hats, star-patterned capes',q:'kids wizard costume robe hat stars'},{ic:'sparkles',l:'Wands & Staffs',t:'Magic props',p:'Glittery wands, glowing staffs',q:'child wizard wand staff prop DIY'},{ic:'moon',l:'Friendly Magic',t:'Warm & whimsical',p:'Purple, midnight blue, gold stars',q:'friendly wizard sorcerer costume kids purple'},{ic:'star',l:'Spell Books',t:'Little sorcerers',p:'Story spellbooks, potion bottles, scrolls',q:'kids wizard spell book potion prop DIY'},{ic:'moon',l:'Starry Night Set',t:'Magic backdrop',p:'Moons, stars, glowing constellations',q:'starry night magic stage backdrop school'}]},
     {grp:'lp',sicon:'sparkles',cicon:'sparkles',glow:'rgba(255,158,196,.32)',ring:'rgba(255,158,196,.6)',scene:'linear-gradient(135deg,#3a1f55,#7a4a9a)',
       level:'Year 1',title:'Mythical Creatures',guardian:'Guardians of Imagination',
       story:'A rainbow realm of impossible creatures — unicorns, dragons, and phoenixes that live only in the brightest imaginations.',
       chars:'Unicorn, mermaid, pegasus, phoenix, dragon',
-      slides:[{ic:'sparkles',l:'Unicorn & Pegasus',t:'Horns & wings',p:'Headbands with horns, feather wings',q:'kids unicorn pegasus costume horn wings'},{ic:'fish',l:'Mermaid',t:'Ocean shimmer',p:'Scale leggings, shell tops',q:'child mermaid costume scales DIY'},{ic:'feather',l:'Dragon & Phoenix',t:'Fire & scales',p:'Wing capes, fiery colours',q:'kids dragon phoenix costume wings'}]},
+      slides:[{ic:'sparkles',l:'Unicorn & Pegasus',t:'Horns & wings',p:'Headbands with horns, feather wings',q:'kids unicorn pegasus costume horn wings'},{ic:'fish',l:'Mermaid',t:'Ocean shimmer',p:'Scale leggings, shell tops',q:'child mermaid costume scales DIY'},{ic:'feather',l:'Dragon & Phoenix',t:'Fire & scales',p:'Wing capes, fiery colours',q:'kids dragon phoenix costume wings'},{ic:'sparkles',l:'Rainbow Colours',t:'Iridescent magic',p:'Holographic fabrics, rainbow tails, shimmer',q:'rainbow unicorn iridescent costume kids'},{ic:'star',l:'Enchanted Set',t:'Fantasy backdrop',p:'Rainbows, clouds, sparkle sky',q:'unicorn rainbow fantasy stage backdrop school'}]},
     {grp:'lp',sicon:'trees',cicon:'trees',glow:'rgba(95,230,207,.32)',ring:'rgba(95,230,207,.6)',scene:'linear-gradient(135deg,#13402a,#236b44)',
       level:'Year 2',title:'Elves & Forest Guardians',guardian:'Guardians of the Trees',
       story:'A deep green forest kept safe by elves and woodland rangers — the first guardians who protect living things. Earthy, brave, gentle.',
       chars:'Elf, forest ranger, dryad, woodland guardian',
-      slides:[{ic:'trees',l:'Elf Tunics',t:'Woodland greens',p:'Green tunics, pointed ears, belts',q:'kids elf forest ranger costume green tunic'},{ic:'leaf',l:'Leaf & Vine',t:'Nature accents',p:'Leaf crowns, vine wraps',q:'dryad woodland guardian leaf costume child'},{ic:'feather',l:'Ranger Gear',t:'Forest protectors',p:'Cloaks, toy bows, earthy tones',q:'child forest ranger cloak bow costume'}]},
+      slides:[{ic:'trees',l:'Elf Tunics',t:'Woodland greens',p:'Green tunics, pointed ears, belts',q:'kids elf forest ranger costume green tunic'},{ic:'leaf',l:'Leaf & Vine',t:'Nature accents',p:'Leaf crowns, vine wraps',q:'dryad woodland guardian leaf costume child'},{ic:'feather',l:'Ranger Gear',t:'Forest protectors',p:'Cloaks, toy bows, earthy tones',q:'child forest ranger cloak bow costume'},{ic:'flower-2',l:'Woodland Crowns',t:'Living headpieces',p:'Moss, twig, and flower crowns',q:'woodland elf leaf twig crown costume'},{ic:'trees',l:'Deep Forest Set',t:'Green backdrop',p:'Tall trees, ferns, dappled light',q:'enchanted forest green stage backdrop school'}]},
     {grp:'lp',sicon:'shield',cicon:'sword',glow:'rgba(242,207,107,.34)',ring:'rgba(242,207,107,.6)',scene:'linear-gradient(135deg,#4a2c12,#7a4a1e)',
       level:'Year 3',title:'Knights & Brave Heroes',guardian:'Guardians of Courage',
       story:'A castle courtyard of young knights learning that courage means standing up for others. Armour, shields, and noble hearts.',
       chars:'Knight, archer, shield bearer, noble warrior',
-      slides:[{ic:'shield',l:'Armour',t:'Knight tabards',p:'Cardboard/foam armour, crests',q:'kids knight costume armour tabard DIY'},{ic:'shield',l:'Shields',t:'Heraldry',p:'Painted shields with crests',q:'child knight shield crest costume'},{ic:'swords',l:'Archers',t:'Brave warriors',p:'Quivers, capes, noble colours',q:'kids archer warrior costume cape'}]},
+      slides:[{ic:'shield',l:'Armour',t:'Knight tabards',p:'Cardboard/foam armour, crests',q:'kids knight costume armour tabard DIY'},{ic:'shield',l:'Shields',t:'Heraldry',p:'Painted shields with crests',q:'child knight shield crest costume'},{ic:'swords',l:'Archers',t:'Brave warriors',p:'Quivers, capes, noble colours',q:'kids archer warrior costume cape'},{ic:'crown',l:'Helmets & Crests',t:'Battle-ready',p:'Foil helmets, plumes, banners',q:'kids knight helmet crest DIY costume'},{ic:'castle',l:'Courtyard Set',t:'Castle backdrop',p:'Stone walls, flags, banners',q:'medieval castle courtyard stage backdrop school'}]},
     {grp:'up',sicon:'scale',cicon:'scale',glow:'rgba(196,169,255,.34)',ring:'rgba(196,169,255,.6)',scene:'linear-gradient(135deg,#2a1a55,#4a2d80)',
       level:'Year 4',title:'Enchanted Nobility',guardian:'Guardians of Fairness',
       story:'A grand council where noble guardians from many kingdoms gather to make fair and peaceful choices for all.',
       chars:'Council of Realms — diplomats, dukes, duchesses, royal advisors',
       sdg:{num:'SDG 16',color:'#00689d',name:'Peace, Justice & Strong Institutions',mean:'A fair world is a peaceful world — everyone deserves to be treated justly.',
         ideas:['Patchwork robes stitched from many kingdom colours, showing every nation united','Carry a large "Treaty of Peace" scroll the council "signs" mid-performance','Hold up a balance-scale prop, or signs reading FAIRNESS / PEACE / JUSTICE','Project the blue SDG 16 dove-and-gavel icon behind them','Unison line: "A fair world is a peaceful world."']},
-      slides:[{ic:'gavel',l:'Diplomat Robes',t:'Patchwork of kingdoms',p:'Multi-colour panel robes, unity sashes',q:'royal diplomat robe costume patchwork colors'},{ic:'scale',l:'Treaty & Sash',t:'Symbols of unity',p:'Scrolls, linked-ring medallions',q:'peace medallion sash costume prop'},{ic:'scale',l:'Balance & Signs',t:'Show the message',p:'Scales of justice, FAIRNESS placards',q:'scales of justice prop kids costume'}]},
+      slides:[{ic:'gavel',l:'Diplomat Robes',t:'Patchwork of kingdoms',p:'Multi-colour panel robes, unity sashes',q:'royal diplomat robe costume patchwork colors'},{ic:'scale',l:'Treaty & Sash',t:'Symbols of unity',p:'Scrolls, linked-ring medallions',q:'peace medallion sash costume prop'},{ic:'scale',l:'Balance & Signs',t:'Show the message',p:'Scales of justice, FAIRNESS placards',q:'scales of justice prop kids costume'},{ic:'globe',l:'Doves of Peace',t:'A gentle symbol',p:'Paper doves, olive branches, white ribbons',q:'peace dove olive branch prop craft kids'},{ic:'crown',l:'Council Hall Set',t:'Assembly backdrop',p:'Pillars, flags of many lands, round table',q:'grand council hall pillars stage backdrop'}]},
     {grp:'up',sicon:'moon',cicon:'moon',glow:'rgba(95,230,207,.34)',ring:'rgba(95,230,207,.6)',scene:'linear-gradient(135deg,#10204a,#2a1a55)',grad:true,
       level:'Year 5',title:'Celestial Magic',guardian:'Guardians of the Skies',
       story:'Half ice, half fire — sky guardians who hold the planet in balance. Our graduating cohort carries the most urgent message of all.',
       chars:'Moon guardian, star keeper, sun guardian, crystal mage',
       sdg:{num:'SDG 13',color:'#3f7e44',name:'Climate Action',mean:'Protect the only planet we have — keep our skies and seasons in balance.',
         ideas:['Half-and-half costumes: icy blue (frost) on one side, warm red (fire) on the other','A "melting glacier vs healthy earth" banner, or a globe prop passed hand to hand','Blue and green ribbons that join into one Earth in the final pose','Project the green SDG 13 eye-of-the-storm icon behind them','Unison line: "Protect our planet — there is no Planet B."']},
-      slides:[{ic:'moon',l:'Ice & Fire Split',t:'Half-and-half robe',p:'One side icy blue, one side warm red',q:'ice fire half costume blue red kids'},{ic:'star',l:'Celestial Crowns',t:'Moon & stars',p:'Crescent crowns, star motifs',q:'celestial moon star costume headpiece'},{ic:'globe',l:'Earth & Banner',t:'Show the message',p:'Globe prop, climate banner, ribbons',q:'earth globe prop climate costume kids'}]},
+      slides:[{ic:'moon',l:'Ice & Fire Split',t:'Half-and-half robe',p:'One side icy blue, one side warm red',q:'ice fire half costume blue red kids'},{ic:'star',l:'Celestial Crowns',t:'Moon & stars',p:'Crescent crowns, star motifs',q:'celestial moon star costume headpiece'},{ic:'globe',l:'Earth & Banner',t:'Show the message',p:'Globe prop, climate banner, ribbons',q:'earth globe prop climate costume kids'},{ic:'sun',l:'Sun & Storm',t:'Sky guardians',p:'Sunbursts, cloud staffs, lightning bolts',q:'sun cloud sky guardian costume kids'},{ic:'sparkles',l:'Galaxy Set',t:'Cosmic backdrop',p:'Stars, planets, aurora, deep-blue sky',q:'galaxy cosmic stars stage backdrop school'}]},
     {grp:'up',sicon:'mountain-snow',cicon:'bird',glow:'rgba(95,230,207,.32)',ring:'rgba(95,230,207,.6)',scene:'linear-gradient(135deg,#13402a,#1a5c3c)',
       level:'Year 6',title:'Legendary Protectors',guardian:'Guardians of Nature',
       story:'Dragon riders and griffin riders who soar above forests and mountains, protecting every creature that lives on the land.',
       chars:'Dragon rider, griffin rider, guardian of the realm, enchanted champion',
       sdg:{num:'SDG 15',color:'#56c02b',name:'Life on Land',mean:'Protect the forests, animals, and wild places — the home of all living things.',
         ideas:['Wing capes and scaled armour paired with leaf and vine wraps','Carry plush or cut-out animals "rescued" and lifted up at the climax','A "forest" backdrop that grows greener as the number goes on','Project the green SDG 15 tree-and-birds icon behind them','Unison line: "Protect every creature, protect their home."']},
-      slides:[{ic:'bird',l:'Riders',t:'Dragon & griffin riders',p:'Wing capes, scaled armour, vine wraps',q:'dragon rider griffin costume kids wings'},{ic:'trees',l:'Nature Guardians',t:'Forest & wild',p:'Leaf textures, carved-animal staffs',q:'forest guardian nature costume staff'},{ic:'leaf',l:'Animals & Backdrop',t:'Show the message',p:'Rescued-animal props, green forest backdrop',q:'forest animals props stage backdrop kids'}]},
+      slides:[{ic:'bird',l:'Riders',t:'Dragon & griffin riders',p:'Wing capes, scaled armour, vine wraps',q:'dragon rider griffin costume kids wings'},{ic:'trees',l:'Nature Guardians',t:'Forest & wild',p:'Leaf textures, carved-animal staffs',q:'forest guardian nature costume staff'},{ic:'leaf',l:'Animals & Backdrop',t:'Show the message',p:'Rescued-animal props, green forest backdrop',q:'forest animals props stage backdrop kids'},{ic:'feather',l:'Winged Guardians',t:'Soaring protectors',p:'Large feather wings, talon gloves, capes',q:'large feather wings costume kids DIY'},{ic:'mountain-snow',l:'Wild Lands Set',t:'Nature backdrop',p:'Mountains, forests, rivers, wildlife',q:'mountain forest wildlife stage backdrop school'}]},
     {grp:'up',sicon:'gem',cicon:'gem',glow:'rgba(242,207,107,.36)',ring:'rgba(242,207,107,.6)',scene:'linear-gradient(135deg,#2e1a5c,#5a3a18)',
       level:'Year 7',title:'The Enchanted Court',guardian:'Guardians of the Future',
       story:'The grandest guardians of all, wearing the colours of every realm before them. They prove that no one protects the world alone.',
       chars:'High king/queen, grand sorcerer, enchantress, celestial guardians',
       sdg:{num:'SDG 17',color:'#19486a',name:'Partnerships for the Goals',mean:'No one protects the world alone — together we can do what none can do apart.',
         ideas:['The lead "Alliance" robe stitched from a swatch of every other realm colour','Gather one guardian from each earlier year on stage for the finale tableau','A giant crystal or globe that lights up as all guardians join hands around it','Project the SDG 17 interlocking-rings icon behind them','Unison line: "Together, we are the guardians of the future."']},
-      slides:[{ic:'crown',l:'High Court',t:'Grandest robes',p:'Gold and deep purple, ceremonial',q:'high king queen royal court costume gold purple'},{ic:'gem',l:'Alliance Crystal',t:'Unity prop',p:'Glowing crystal, charms from every guild',q:'crystal staff glowing prop costume'},{ic:'sparkles',l:'United Finale',t:'Show the message',p:'Every realm colour, all guardians joined',q:'patchwork rainbow robe unity costume'}]}
+      slides:[{ic:'crown',l:'High Court',t:'Grandest robes',p:'Gold and deep purple, ceremonial',q:'high king queen royal court costume gold purple'},{ic:'gem',l:'Alliance Crystal',t:'Unity prop',p:'Glowing crystal, charms from every guild',q:'crystal staff glowing prop costume'},{ic:'sparkles',l:'United Finale',t:'Show the message',p:'Every realm colour, all guardians joined',q:'patchwork rainbow robe unity costume'},{ic:'gem',l:'Regalia & Capes',t:'Ceremonial finery',p:'Long trains, ornate collars, gold trim',q:'royal ceremonial cape gold regalia costume'},{ic:'sparkles',l:'Grand Hall Set',t:'Majestic backdrop',p:'Golden arches, banners of every realm',q:'grand royal hall golden arches stage backdrop'}]}
   ];
 
   function sdgPanel(s){
