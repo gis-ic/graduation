@@ -792,7 +792,7 @@ const ICONS={"trees": "<path d=\"M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10
       chars:'High king/queen, grand sorcerer, enchantress, celestial guardians',
       sdg:{num:'SDG 17',color:'#19486a',name:'Partnerships for the Goals',mean:'No one protects the world alone — together we can do what none can do apart.',
         ideas:['The lead "Alliance" robe stitched from a swatch of every other realm colour','Gather one guardian from each earlier year on stage for the finale tableau','A giant crystal or globe that lights up as all guardians join hands around it','Project the SDG 17 interlocking-rings icon behind them','Unison line: "Together, we are the guardians of the future."']},
-      slides:[{ic:'crown',l:'High Court',t:'Grandest robes',p:'Gold and deep purple, ceremonial',q:'high king queen royal court costume gold purple'},{ic:'gem',l:'Alliance Crystal',t:'Unity prop',p:'Glowing crystal, charms from every guild',q:'crystal staff glowing prop costume'},{ic:'sparkles',l:'United Finale',t:'Show the message',p:'Every realm colour, all guardians joined',q:'patchwork rainbow robe unity costume'},{ic:'gem',l:'Regalia & Capes',t:'Ceremonial finery',p:'Long trains, ornate collars, gold trim',q:'royal ceremonial cape gold regalia costume'},{ic:'sparkles',l:'Backdrop Vibe',t:'Majestic golden palace',p:'A grand golden throne hall of every realm',q:'majestic fantasy golden palace throne hall ornate hd wallpaper'}]}
+      slides:[{ic:'crown',l:'High Court',t:'Grandest robes',p:'Gold and deep purple, ceremonial',q:'high king queen royal court costume gold purple'},{ic:'gem',l:'Alliance Crystal',t:'Unity prop',p:'Glowing crystal, charms from every guild',q:'glowing crystal orb royal gold prop'},{ic:'sparkles',l:'United Finale',t:'Show the message',p:'Every realm colour, all guardians joined',q:'world unity costume'},{ic:'gem',l:'Regalia & Capes',t:'Ceremonial finery',p:'Long trains, ornate collars, gold trim',q:'royal ceremonial cape gold regalia costume'},{ic:'globe',l:'Backdrop Vibe',t:'World unity',p:'A united-world scene for the big screen',url:'https://ph.pinterest.com/pin/12173861489955304/'}]}
   ];
 
   function sdgPanel(s){
@@ -808,7 +808,7 @@ const ICONS={"trees": "<path d=\"M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10
   function buildCard(r){
     const grad=r.grad?`<span class="badge-grad">${ic('star')}Graduates</span>`:'';
     const sdgPill=r.sdg?`<span class="sdg-pill">${ic('globe')} ${r.sdg.num} · ${r.sdg.name.split(' ').slice(0,2).join(' ')}</span>`:'';
-    const slides=r.slides.map(s=>`<div class="slide"><div class="ph-icon">${svgIcon(s.ic)}</div><span class="ph-label">${s.l}</span><h5>${s.t}</h5><p>${s.p}</p><a class="search-btn" target="_blank" rel="noopener" href="https://www.pinterest.com/search/pins/?q=${encodeURIComponent(s.q)}">Open inspiration gallery ${ic('chevron-right')}</a></div>`).join('');
+    const slides=r.slides.map(s=>`<div class="slide"><div class="ph-icon">${svgIcon(s.ic)}</div><span class="ph-label">${s.l}</span><h5>${s.t}</h5><p>${s.p}</p><a class="search-btn" target="_blank" rel="noopener" href="${s.url?s.url:'https://www.pinterest.com/search/pins/?q='+encodeURIComponent(s.q)}">Open inspiration gallery ${ic('chevron-right')}</a></div>`).join('');
     const dots=r.slides.map((_,i)=>`<button data-i="${i}" class="${i===0?'active':''}" aria-label="Slide ${i+1}"></button>`).join('');
     const cvine='<svg class="cvine t" viewBox="0 0 120 120" aria-hidden="true"><path d="M2 2 C2 40 6 70 26 90 C44 108 74 112 110 114"/><path d="M2 2 C40 4 70 8 90 28 C108 46 112 76 114 110"/><ellipse class="lf" cx="30" cy="16" rx="7" ry="3" transform="rotate(35 30 16)"/><ellipse class="lf" cx="16" cy="30" rx="7" ry="3" transform="rotate(-55 16 30)"/></svg>'+
                 '<svg class="cvine b" viewBox="0 0 120 120" aria-hidden="true"><path d="M2 2 C2 40 6 70 26 90 C44 108 74 112 110 114"/><path d="M2 2 C40 4 70 8 90 28 C108 46 112 76 114 110"/><ellipse class="lf" cx="30" cy="16" rx="7" ry="3" transform="rotate(35 30 16)"/><ellipse class="lf" cx="16" cy="30" rx="7" ry="3" transform="rotate(-55 16 30)"/></svg>';
@@ -837,14 +837,20 @@ const ICONS={"trees": "<path d=\"M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10
   ['ey','lp','up'].forEach(g=>{document.getElementById('cards-'+g).innerHTML=REALMS.filter(r=>r.grp===g).map(buildCard).join('');});
 
   document.querySelectorAll('.carousel').forEach(car=>{
-    const track=car.querySelector('.track');const slides=track.children.length;const dots=[...car.querySelectorAll('.dots button')];let idx=0,timer;
+    const track=car.querySelector('.track');const slides=track.children.length;const dots=[...car.querySelectorAll('.dots button')];let idx=0,timer=null,idle=null;
+    const REDUCE=matchMedia('(prefers-reduced-motion:reduce)').matches;
     function go(n){idx=(n+slides)%slides;track.style.transform=`translateX(-${idx*100}%)`;dots.forEach((d,i)=>d.classList.toggle('active',i===idx));}
-    function auto(){timer=setInterval(()=>go(idx+1),5000);}function stop(){clearInterval(timer);}
-    car.querySelector('.prev').onclick=()=>{go(idx-1);stop();auto();};
-    car.querySelector('.next').onclick=()=>{go(idx+1);stop();auto();};
-    dots.forEach(d=>d.onclick=()=>{go(+d.dataset.i);stop();auto();});
-    car.addEventListener('mouseenter',stop);car.addEventListener('mouseleave',auto);
-    if(!matchMedia('(prefers-reduced-motion:reduce)').matches)auto();
+    function play(){if(REDUCE)return;stop();timer=setInterval(()=>go(idx+1),7000);}
+    function stop(){if(timer){clearInterval(timer);timer=null;}}
+    // any interaction holds the carousel still, then it drifts again after a calm pause
+    function hold(){stop();clearTimeout(idle);idle=setTimeout(play,9000);}
+    car.querySelector('.prev').onclick=()=>{go(idx-1);hold();};
+    car.querySelector('.next').onclick=()=>{go(idx+1);hold();};
+    dots.forEach(d=>d.onclick=()=>{go(+d.dataset.i);hold();});
+    // Any interaction (hover, move, press, touch, focus, wheel) holds the carousel still;
+    // it only drifts again after a calm stretch with no interaction. Reliable on mouse and touch alike.
+    ['mouseenter','mousemove','mousedown','touchstart','focusin','wheel'].forEach(ev=>car.addEventListener(ev,hold,{passive:true}));
+    play();
   });
 
   // ===== MUSIC (YouTube IFrame API) + STORYBOOK COVER =====
